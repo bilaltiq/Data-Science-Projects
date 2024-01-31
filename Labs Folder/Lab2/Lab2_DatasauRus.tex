@@ -1,0 +1,855 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Lab2\_DatasauRus},
+  pdfauthor={Bilal Tariq},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Lab2\_DatasauRus}
+\author{Bilal Tariq}
+\date{2024-01-31}
+
+\begin{document}
+\maketitle
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, sharp corners, breakable, interior hidden, enhanced, borderline west={3pt}{0pt}{shadecolor}, frame hidden]}{\end{tcolorbox}}\fi
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(kableExtra)}
+\FunctionTok{library}\NormalTok{(datasauRus)}
+
+\CommentTok{\# set black \& white default plot theme}
+\FunctionTok{theme\_set}\NormalTok{(}\FunctionTok{theme\_classic}\NormalTok{()) }
+
+\CommentTok{\# improve digit and NA display }
+\FunctionTok{options}\NormalTok{(}\AttributeTok{scipen =} \DecValTok{1}\NormalTok{, }\AttributeTok{knitr.kable.NA =} \StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{lab-purpose}{%
+\section{Lab Purpose}\label{lab-purpose}}
+
+This lab is a modified version of a lab developed by Mine
+Cetinkaya-Rundel. You'll be working in random breakout groups to work
+through the lab.
+
+\emph{Introduce yourselves to each other as you get started - preferred
+names, at least one academic interest, and at least one extracurricular
+activity.}
+
+The main goal of this lab is to introduce you to working with R and
+RStudio in conjunction with git and GitHub, all of which we will be
+using throughout the course. You will then submit the completed lab to
+Gradescope (the compiled .pdf of it) to make sure everyone is able to
+use Gradescope appropriately. Further directions are contained in the
+Practice0 assignment and you should check them out.
+
+We will work primarily with two R packages: \texttt{datasauRus} which
+contains the datasets for the lab, and \texttt{tidyverse} which is a
+collection of packages for doing data analysis in a ``tidy'' way. Both
+packages are ready to be loaded in the \texttt{setup} code chunk.
+\texttt{tidyverse} loads \texttt{dplyr} which many of you may have seen
+used for data wrangling in other stats courses. It also loads
+\texttt{ggplot2} which is the package we'll be using to make our
+visualizations (more next week).
+
+\hypertarget{step-0-get-the-lab-.qmd-file-from-the-course-git-repo-by-pulling-the-repo.-copy-the-file-over-to-your-personal-repo-for-class.}{%
+\subsection{Step 0: Get the lab .Qmd file from the course git repo by
+pulling the repo. Copy the file over to your personal repo for
+class.}\label{step-0-get-the-lab-.qmd-file-from-the-course-git-repo-by-pulling-the-repo.-copy-the-file-over-to-your-personal-repo-for-class.}}
+
+Assuming you have Prep0 completed (you should!), and you accepted your
+invite to the class GitHub organization, you should have access to the
+course git repo. Pulling updates your local copy of the repo, making
+sure you have the most recent copy of the lab that I've posted. Then,
+you can copy the file over to your repo to work on it. More detailed
+directions for how to do the copying are in the GitHub classroom guide.
+Once this is done, we are ready to get going.
+
+\hypertarget{step-1-verify-you-are-working-on-the-lab-saved-in-your-repo-and-that-you-are-working-in-your-project-repo.}{%
+\subsection{\texorpdfstring{Step 1: Verify you are working on the lab
+saved in \emph{your} repo and that you are working in \emph{your}
+project
+repo.}{Step 1: Verify you are working on the lab saved in your repo and that you are working in your project repo.}}\label{step-1-verify-you-are-working-on-the-lab-saved-in-your-repo-and-that-you-are-working-in-your-project-repo.}}
+
+Look in the top right of RStudio to verify the project name matches
+\emph{your} repo. (If you decided to use the GitHub Desktop app, you
+won't need this part; instead check in your file explorer that you're
+working in the right place.)
+
+Knit the Qmd/Rmd file (\texttt{Cmd\ +\ Shift\ +\ K} on Mac or
+\texttt{Ctrl\ +\ Shift\ +\ K} on PC or hit the \texttt{Knit} button in
+the toolbar above) and verify the pdf (or other relevant files) is
+created in \emph{your} repo and not some other location.
+
+(From here on, if you see Rmd, it's because it could be Qmd or Rmd -
+it's whatever file you're coding in, etc.)
+
+\hypertarget{step-2-enter-your-name-in-the-yaml-header-where-indicated.}{%
+\subsection{Step 2: Enter your name in the YAML header where
+indicated.}\label{step-2-enter-your-name-in-the-yaml-header-where-indicated.}}
+
+``YAML'' rhymes with ``camel'' and stands for ``Yet Another Markup
+Language''. YAML headers are very sensitive - even a space or comma out
+of place can cause them to break. Be careful if you delete the
+parentheses there - they must be put back exactly.
+
+\hypertarget{step-3-knit-view-diff-and-commit}{%
+\subsection{Step 3: Knit, view diff, and
+commit!}\label{step-3-knit-view-diff-and-commit}}
+
+Entering your name made a change to the file that we will be able to
+track with Git.
+
+Knit the Rmd file, then go to your Github Desktop app (or the Git pane
+if you set it up in RStudio).
+
+Click on the document in the app to see the changes you made. You can
+uncheck the .pdf at the same time - we only want the .Qmd/.Rmd at the
+moment.
+
+If you're happy with the changes, write ``Update author name'' in the
+\textbf{Commit message} box, and hit \textbf{Commit}. The box is in the
+lower left corner of the app.
+
+This saves your changes locally including the message. The changes
+haven't been sent back to GitHub yet though.
+
+\emph{How often should you commit??} You do not have to commit after
+every change; this would get quite cumbersome. You should consider
+committing states that are \emph{meaningful to you} for inspection,
+comparison, or restoration. For example, perhaps you commit after you've
+completed part of a problem, or after you got a graphic working, or a
+really complicated wrangling command down.
+
+\hypertarget{step-4-push-your-changes}{%
+\subsection{Step 4: Push your changes}\label{step-4-push-your-changes}}
+
+After committing, go ahead and \textbf{Push} your commit(s) back onto
+GitHub using the buttons. In the app, after you've made a commit, the
+Fetch/Pull option turns into a Push option. Click that to push.
+
+You can think of commits as snapshots of your work over time, and
+pushing will sync your work with GitHub so you (or a collaborator) can
+pick up where you left off but on another device. You don't have to push
+after every commit, but should push before you stop working on anything.
+You want your changes to be available to the next person working (your
+future self or your collaborators).
+
+\hypertarget{step-5-edit-commit-and-push-until-done}{%
+\subsection{Step 5: Edit, Commit, and Push until
+done!}\label{step-5-edit-commit-and-push-until-done}}
+
+Work through the rest of the lab. When you are done with the assignment,
+save the pdf as
+``\emph{YourFirstInitialYourLastName}\_\emph{thisfilename}.pdf'' before
+committing and pushing (this is generally good practice but also helps
+me in those times where I need to download all student homework files).
+For example, I would save this as AWagaman\_Lab2.pdf. At times it is
+also useful to add the date at the end. Final pdfs should be relabeled
+this way to set them apart as your final submission.
+
+You MUST push a final version of each lab .Qmd.Rmd and .pdf to your repo
+for our course assignments. This counts as part of your participation in
+class, and for this assignment, part of Practice0 is making sure I can
+find these in your repo. Note that you don't have to push the .pdf until
+you've finalized it, but it doesn't hurt to do it earlier either
+(assuming you keep the repo organized, anyway). Just be sure you get the
+rename in on the final version so that's clear.
+
+\hypertarget{gradescope-upload}{%
+\subsection{Gradescope Upload}\label{gradescope-upload}}
+
+Our Practice0 assignment is designed to ensure you've successfully
+submitted an assignment to Gradescope before the first real assignment
+is due. No feedback will be provided on this assignment. Here's how that
+will work when you are finished with the lab and have your final .pdf.
+
+For each question/part, allocate all pages associated with the specific
+question/part. Do your best with this. If your work for a question runs
+onto a page that you did not select, you may not get credit for the
+work. If you do not allocate \emph{any} pages when you upload your pdf,
+you may get a zero for the assignment.
+
+You can resubmit your work as many times as you want before the
+deadline, so you should absolutely not wait until the last minute to
+submit some version of your work. You should be compiling as you go,
+reducing the chance of last minute compiling issues. Your git repo will
+show when you've made commits, too. For this activity, I've provided the
+commit messages so they should show. If you do run into an issue, submit
+whatever you have completed to receive partial credit.
+
+\hypertarget{come-together---make-sure-everyone-is-ready-before-moving-on}{%
+\subsection{Come together - Make sure everyone is ready before moving
+on}\label{come-together---make-sure-everyone-is-ready-before-moving-on}}
+
+\newpage
+
+\hypertarget{working-with-some-data-and-practicing-workflow}{%
+\section{Working with some data and practicing
+workflow}\label{working-with-some-data-and-practicing-workflow}}
+
+The data we will be working with is called \emph{datasaurus\_dozen} and
+it's in the \texttt{datasauRus} package.
+
+When loaded, this data appears to be a single dataset. However, this
+single dataset contains 13 datasets, designed to show us why data
+visualisation is important and how summary statistics alone can be
+misleading. The different datasets are identified by the
+\texttt{dataset} variable.
+
+To find out more about the dataset, type the following in your Console:
+\texttt{?datasaurus\_dozen}. A question mark before the name of an
+object will always bring up its help file. This command can be run in
+the Console or a code chunk, but remove it or comment it out from the
+code chunk before you compile.
+
+\hypertarget{understanding-the-data}{%
+\section{1 - Understanding the data}\label{understanding-the-data}}
+
+It is tempting to jump into visualization and analysis (like we did a
+little on the first day), but it is critical as a statistician that we
+first understand the context and structure of the data.
+
+\begin{quote}
+part a - Based on the help file, how many rows and how many columns are
+in the data frame?
+\end{quote}
+
+Solution:
+
+\begin{quote}
+part b - Based on the help file, what variables are included in the data
+frame?
+\end{quote}
+
+Solution:
+
+Markdown allows you to do a lot in terms of formatting that you may not
+have seen before. For example, you can enter bulleted lists by using the
+following pattern:
+
+\begin{itemize}
+\tightlist
+\item
+  first item
+\item
+  second item
+\item
+  third item
+\end{itemize}
+
+For more on Markdown formatting, you can check out the RMarkdown
+formatting \texttt{cheatsheet} in our Resources folder or find out more
+\href{https://www.rstudio.com/resources/cheatsheets/}{here} online.
+You'll see lots of cheatsheets available for reference.
+
+\begin{quote}
+part c - Use Markdown formatting to provide a bulleted list of the
+variables.
+\end{quote}
+
+Solution:
+
+\begin{quote}
+part d - How many observations are in each dataset within this larger
+data frame? Let's make a \emph{frequency table} of the of the
+\texttt{dataset} variable to find out.
+\end{quote}
+
+Note: The \texttt{kable()} function (from \texttt{knitr} package, with
+more functionality available from the \texttt{kableExtra} package) makes
+nicer looking tables when you knit. For quick ``professional quality''
+pdf tables, add the argument \texttt{booktabs\ =\ TRUE}.
+
+Try knitting the document without piping the frequency table to
+\texttt{kable()}, with the pipe to \texttt{kable()}, and finally with
+the pipe to \texttt{kable(booktabs\ =\ TRUE)} to see the differences.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datasaurus\_dozen }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(dataset) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule\noalign{}
+dataset & n \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+away & 142 \\
+bullseye & 142 \\
+circle & 142 \\
+dino & 142 \\
+dots & 142 \\
+h\_lines & 142 \\
+high\_lines & 142 \\
+slant\_down & 142 \\
+slant\_up & 142 \\
+star & 142 \\
+v\_lines & 142 \\
+wide\_lines & 142 \\
+x\_shape & 142 \\
+\end{longtable}
+
+Note: By default, the table is left-justified. You can pipe to an
+additional function called \texttt{kable\_styling()} which allows
+further customization of pdf tables. By default, this function will
+center the table. It may also do a weird LaTeX thing where the table
+ends up somewhere else in the document other than where you want it. To
+prevent that from happening, we can add the argument
+\texttt{latex\_options\ =\ "hold\_position"} (or
+\texttt{"HOLD\_position"} if you're \emph{really} serious).
+
+LaTeX is responsible for setting up our document formatting.
+Kniting/compiling actually creates a .tex document first that is
+converted into a .pdf. Learning some LaTeX can be very useful for trying
+to deal with issues as well as getting equations and symbols in the
+document in the format you want.
+
+Solution: (How many observations are in each data set? Write a
+sentence!)
+
+\newpage
+
+\hypertarget{data-visualization-and-summary}{%
+\section{2 - Data visualization and
+summary}\label{data-visualization-and-summary}}
+
+\begin{quote}
+part a - A correlation
+\end{quote}
+
+Calculate the correlation coefficient, \(r\), between \texttt{x} and
+\texttt{y} for the \texttt{dino} dataset. Below is the code you will
+need to complete this exercise. Basically, the answer is already given,
+but you need to include relevant bits in your Rmd document and
+successfully knit it and view the results.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Start with \textasciigrave{}datasaurus\_dozen\textasciigrave{}}
+\CommentTok{\# Filter for observations where \textasciigrave{}dataset == "dino"\textasciigrave{}}
+\CommentTok{\# Store the resulting filtered data frame as a new data frame called \textasciigrave{}dino\_data\textasciigrave{}}
+\NormalTok{dino\_data }\OtherTok{\textless{}{-}}\NormalTok{ datasaurus\_dozen }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(dataset }\SpecialCharTok{==} \StringTok{"dino"}\NormalTok{)}
+
+\CommentTok{\# Compute correlation between \textasciigrave{}x\textasciigrave{} and \textasciigrave{}y\textasciigrave{} for \textasciigrave{}dino\textasciigrave{} dataset with label \textasciigrave{}r\textasciigrave{}}
+\NormalTok{dino\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{r =} \FunctionTok{cor}\NormalTok{(x, y))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 1
+        r
+    <dbl>
+1 -0.0645
+\end{verbatim}
+
+What does this correlation coefficient tell us about the relationship
+between \texttt{x} and \texttt{y} in the \texttt{dino} dataset?
+
+Solution:
+
+\begin{quote}
+part b - A plot
+\end{quote}
+
+Oops. In intro stats, we learned correlation is an appropriate measure
+to use to assess linear relationships. But we didn't plot the
+relationship here to check it out first. Let's do that.
+
+We want to plot \texttt{y} vs.~\texttt{x} for the \texttt{dino} dataset
+using the \texttt{ggplot()} function. Its first argument is the data
+you're visualizing. Next we define the \texttt{aes}thetic mappings. In
+other words, the columns of the data that get mapped to certain
+aesthetic features of the plot, e.g.~the \(x\) axis will represent the
+variable called \texttt{x} and the \(y\) axis will represent the
+variable called \texttt{y}. Then, we add another layer to this plot
+where we define which \texttt{geom}etric shapes we want to use to
+represent each observation in the data. In this case we want these to be
+points, hence \texttt{geom\_point}.
+
+You will learn about the philosophy of building data visualizations in
+detail next week. For now, follow along with the code that is provided.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ dino\_data, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+What do you notice now about the relationship between x and y? Is using
+correlation as a summary measure appropriate?
+
+Solution:
+
+\begin{quote}
+part c - Another correlation
+\end{quote}
+
+Now calculate the correlation coefficient between \texttt{x} and
+\texttt{y} for the \texttt{star} dataset. You can (and should) reuse
+code we introduced above, after pasting it below, just replace the
+dataset name with the desired dataset. How does this value compare to
+the correlation coefficient from the \texttt{dino} dataset?
+
+Solution:
+
+\begin{quote}
+part d - Another plot
+\end{quote}
+
+Plot \texttt{y} versus \texttt{x} for the \texttt{star} dataset. Does
+the plot look the same as the plot of the \texttt{dino} data? Is
+correlation an appropriate summary measure?
+
+Solution:
+
+\begin{quote}
+part e - A final correlation
+\end{quote}
+
+Now calculate the correlation coefficient between \texttt{x} and
+\texttt{y} for the \texttt{circle} dataset. You can (and should) reuse
+code we introduced above, after pasting it below, just replace the
+dataset name with the desired dataset. How does this value compare to
+the correlation coefficients from the other two datasets?
+
+Solution:
+
+\begin{quote}
+part f - A final plot
+\end{quote}
+
+Plot \texttt{y} versus \texttt{x} for the \texttt{circle} dataset. Does
+the plot look the same as either plot from the other two datasets?
+
+Solution:
+
+\newpage
+
+\hypertarget{making-things-more-efficient}{%
+\section{3 - Making things more
+efficient}\label{making-things-more-efficient}}
+
+The previous problem had a lot of repetition. To make things more
+efficient, we can plot all the datasets at once using \emph{facets}, and
+we can compute all the correlations at once using the
+\texttt{group\_by()} function. The code is provided below.
+
+\begin{quote}
+part a - Make the figure and get the values.
+\end{quote}
+
+Solution:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Scatterplots by dataset}
+\FunctionTok{ggplot}\NormalTok{(datasaurus\_dozen, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y, }\AttributeTok{color =}\NormalTok{ dataset))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ dataset, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
+
+\CommentTok{\# Correlations by dataset}
+\NormalTok{datasaurus\_dozen }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(dataset) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{r =} \FunctionTok{cor}\NormalTok{(x, y)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+part b - What do you notice? Is the correlation coefficient an
+appropriate summary for any of these datasets? Why or why not?
+\end{quote}
+
+Solution:
+
+\begin{quote}
+part c - What do you think \texttt{ncol\ =\ 3} does in the code above?
+What about \texttt{digits\ =\ 3}?
+\end{quote}
+
+Solution:
+
+\newpage
+
+\hypertarget{more-on-r}{%
+\section{4 - More on R}\label{more-on-r}}
+
+\begin{quote}
+part a - Code chunk options
+\end{quote}
+
+.Qmds/.Rmds allow for global options to be set for how code chunks work.
+At times, you might change those options for a particular chunk, such as
+when you adjusted fig.width and fig.height above. In .Qmds, these end up
+inside the chunk, while in .Rmds, these are in the \{r\} definition of
+the chunk.
+
+Let's explore how these options work when compared to the default
+settings. Add the following options (one at a time!) to the code chunk
+below and re-knit the PDF each time. Try to identify what each option is
+doing to the PDF output. The QMD and RMD versions are provided for you
+to see (note the differences in capitalization required), but this is a
+.Qmd, so use those.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{\#\textbar{}\ echo:\ false} OR Rmd version
+  \texttt{echo\ =\ FALSE}:
+\item
+  \texttt{\#\textbar{}\ eval:\ false} OR Rmd version
+  \texttt{eval\ =\ FALSE}:
+\item
+  \texttt{\#\textbar{}\ include:\ false} OR Rmd version
+  \texttt{include\ =\ FALSE}:
+\item
+  \texttt{\#\textbar{}\ collapse:\ true} OR Rmd version
+  \texttt{collapse\ =\ TRUE}:
+\end{itemize}
+
+After trying out the options, to complete this part, use appropriate
+options to output the correlations but not show any of the code used to
+get them.
+
+Solution:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Correlations by dataset (plain R output)}
+\NormalTok{datasaurus\_dozen }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(dataset) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{r =} \FunctionTok{cor}\NormalTok{(x, y) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{round}\NormalTok{(}\DecValTok{3}\NormalTok{)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 13 x 2
+   dataset         r
+   <chr>       <dbl>
+ 1 away       -0.064
+ 2 bullseye   -0.069
+ 3 circle     -0.068
+ 4 dino       -0.064
+ 5 dots       -0.06 
+ 6 h_lines    -0.062
+ 7 high_lines -0.069
+ 8 slant_down -0.069
+ 9 slant_up   -0.069
+10 star       -0.063
+11 v_lines    -0.069
+12 wide_lines -0.067
+13 x_shape    -0.066
+\end{verbatim}
+
+Note: There are a lot more R code chunk options, most of which we'll not
+use in this course. But if you're interested in the full list, check out
+the
+\href{https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf}{RMarkdown
+Reference Guide}.
+
+\begin{quote}
+part b - Inline R code
+\end{quote}
+
+Here's another fun functionality of RMarkdown: You can use inline R code
+chunks to place R numerical output in your text. For instance:
+
+The dino dataset contains 142 observations and has 3 variables. The mean
+\(x\) value is 54.2632732 units and the mean \(y\) value is 47.8322528
+units.
+
+You can use the \texttt{round} command to get a sensible number of
+digits: The mean \(x\) value is 54.3 units and the mean \(y\) value is
+47.8 units.
+
+Use inline R coding to write a sentence about the standard deviation of
+\(x\) in the dino dataset reported to 1 decimal place.
+
+Solution:
+
+\begin{quote}
+part c - Text versus code formatting
+\end{quote}
+
+Markdown will take text that is typed outside a code chunk and format it
+so that it doesn't run off the page. It doesn't do that within code
+chunks though. This can be problematic for both code and code comments.
+We'll be learning a coding style that should help avoid issues with
+this, but if you have a lot of options, it can still be an issue. Let's
+look at some code that needs adjusting to fix.
+
+(If you don't have a code margin line showing in your RStudio, look
+under Tools \textgreater{} Global Options \textgreater{} Code
+\textgreater{} Display for \texttt{show\ margin} and set the margin
+column to 80. It's closer to 88, but if you use 80, it will match the
+text margin.)
+
+We will use the \texttt{iris} data set built into R for this example (it
+has more variables to play with). Look at the help menu for details on
+the data set.
+
+If you knit to pdf without doing anything in the chunk below, both the
+comment and code will run off the page. (Knit and check that you can see
+this!) We want to fix this.
+
+For comments, you can spread them on different lines manually by making
+a series of shorter messages (demo-ed above in problem 2) or simply by
+writing a more compact comment.
+
+For code, the idea is to only allow for one pipe (the \%\textgreater\%
+operator) or plus sign (for plots) per line, using indents to keep the
+overall line together (see examples above). This is the coding style we
+are using for class. It helps with code readability a ton! If you have a
+long variable list or something (not pipes or plus signs causing the
+issue), you'll need to manually hit enter somewhere in the list that's
+not over the line.
+
+Fix the code chunk below so that neither the comment (which you can
+rewrite) nor the code goes off the edge of the page, following the
+coding style described and demonstrated above.
+
+Solution:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# want to get the correlation between Sepal.Length and Sepal.Width for all three iris species in the data set}
+\FunctionTok{data}\NormalTok{(iris)}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(Species, Sepal.Length, Sepal.Width) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarize}\NormalTok{(}\AttributeTok{correlation =} \FunctionTok{cor}\NormalTok{(Sepal.Length, Sepal.Width)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 3 x 2
+  Species    correlation
+  <fct>            <dbl>
+1 setosa           0.743
+2 versicolor       0.526
+3 virginica        0.457
+\end{verbatim}
+
+\newpage
+
+\textbf{References}
+
+The original Datasaurus (\texttt{dino}) was created by Alberto Cairo in
+\href{http://www.thefunctionalart.com/2016/08/download-datasaurus-never-trust-summary.html}{this
+great blog post}. The other Dozen were generated using simulated
+annealing and the process is described in the paper \emph{Same Stats,
+Different Graphs: Generating Datasets with Varied Appearance and
+Identical Statistics through Simulated Annealing} by Justin Matejka and
+George Fitzmaurice. In the paper, the authors simulate a variety of
+datasets that the same summary statistics to the Datasaurus but have
+very different distributions.
+
+
+
+\end{document}

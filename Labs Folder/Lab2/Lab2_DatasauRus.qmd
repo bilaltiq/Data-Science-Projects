@@ -1,8 +1,8 @@
 ---
 title: "Lab2_DatasauRus"
-author: "YourNameGoesHere"
+author: "Bilal Tariq"
 date: "2024-01-31"
-format: pdf
+format: html
 editor: visual
 ---
 
@@ -120,12 +120,11 @@ For more on Markdown formatting, you can check out the RMarkdown formatting `che
 
 Solution:
 
-
+```{=html}
 <!--
 Check that when you knit you get what you expect. Extra space, or lack thereof, can change the formatting. The formatting used here means this text is a comment you see in the .Qmd/.Rmd but not in the .pdf. 
 -->
-
-
+```
 > part d - How many observations are in each dataset within this larger data frame? Let's make a *frequency table* of the of the `dataset` variable to find out.
 
 Note: The `kable()` function (from `knitr` package, with more functionality available from the `kableExtra` package) makes nicer looking tables when you knit. For quick "professional quality" pdf tables, add the argument `booktabs = TRUE`.
@@ -151,7 +150,6 @@ Solution: (How many observations are in each data set? Write a sentence!)
 TIME TO COMMIT! After you've added your responses to the parts above for the first problem, knit to make sure things are still working and the pdf looks the way you want, and commit your changes to the Rmd file with the commit message "Add answers to problem 1"
 -->
 ```
-
 \newpage
 
 <!-- PROBLEM 2 ---------------------------------------------------------------->
