@@ -291,7 +291,7 @@ ggplot(data = circle_data, mapping = aes(x = x, y = y)) +
 
 ```
 
-Solution: The plot does not look the same, it is very distinct and dissimilar from the previous two plots. 
+Solution: The plot does not look the same, it is very distinct and dissimilar from the previous two plots.
 
 ```{=html}
 <!-- 
