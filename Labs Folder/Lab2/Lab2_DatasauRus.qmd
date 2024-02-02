@@ -308,13 +308,15 @@ The previous problem had a lot of repetition. To make things more efficient, we 
 
 > part a - Make the figure and get the values.
 
-Solution:
+Solution: -0.064, -0.069, -0.068, -0.064, -0.060 and so on...
 
 <!-- set `eval: true` and adjust the figure dimensions so things don't look smushed in the pdf -->
 
 ```{r}
 #| label: plot-cors
-#| eval: false
+#| eval: true
+#| fig-width: 4
+#| fig-height: 4
 
 
 # Scatterplots by dataset
@@ -332,11 +334,11 @@ datasaurus_dozen %>%
 
 > part b - What do you notice? Is the correlation coefficient an appropriate summary for any of these datasets? Why or why not?
 
-Solution:
+Solution: I noticed that ALL of these datasets have a very similar correlation coefficient. Yet, we can see that all of these datasets are incredibly distinct and can represent different things when plotted visually. Thus, the correlation coefficient is not an appropriate summary for any of these datasets.
 
 > part c - What do you think `ncol = 3` does in the code above? What about `digits = 3`?
 
-Solution:
+Solution: ncol represents the number of columns that we're using and the digits = 3 part represents the number of significant figures.
 
 ```{=html}
 <!-- 
