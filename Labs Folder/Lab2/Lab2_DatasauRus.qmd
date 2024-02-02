@@ -78,7 +78,7 @@ You MUST push a final version of each lab .Qmd.Rmd and .pdf to your repo for our
 
 Our Practice0 assignment is designed to ensure you've successfully submitted an assignment to Gradescope before the first real assignment is due. No feedback will be provided on this assignment. Here's how that will work when you are finished with the lab and have your final .pdf.
 
-For each question/part, allocate all pages associated with the specific question/part. Do your best with this. If your work for a question runs onto a page that you did not select, you may not get credit for the work. If you do not allocate *any* pages when you upload your pdf, you may get a zero for the assignment.
+For each question/part, allocate all pages associated with the specific question/part. Do your best with this. If your work for a question runs onto a page that you did not select, you may not get credit for the work. If you do n?ot allocate *any* pages when you upload your pdf, you may get a zero for the assignment.
 
 You can resubmit your work as many times as you want before the deadline, so you should absolutely not wait until the last minute to submit some version of your work. You should be compiling as you go, reducing the chance of last minute compiling issues. Your git repo will show when you've made commits, too. For this activity, I've provided the commit messages so they should show. If you do run into an issue, submit whatever you have completed to receive partial credit.
 
@@ -102,11 +102,11 @@ It is tempting to jump into visualization and analysis (like we did a little on 
 
 > part a - Based on the help file, how many rows and how many columns are in the data frame?
 
-Solution:
+Solution: There are 1846 rows with 3 columns.
 
 > part b - Based on the help file, what variables are included in the data frame?
 
-Solution:
+Solution: There are 3 variables: the dataset, x and y values.
 
 Markdown allows you to do a lot in terms of formatting that you may not have seen before. For example, you can enter bulleted lists by using the following pattern:
 
@@ -119,6 +119,10 @@ For more on Markdown formatting, you can check out the RMarkdown formatting `che
 > part c - Use Markdown formatting to provide a bulleted list of the variables.
 
 Solution:
+
+-   dataset
+-   x
+-   y
 
 ```{=html}
 <!--
@@ -136,7 +140,8 @@ Try knitting the document without piping the frequency table to `kable()`, with 
 
 datasaurus_dozen %>% 
   count(dataset) %>% 
-  kable(booktabs = TRUE) 
+  kable(booktabs = TRUE)
+  
 ```
 
 Note: By default, the table is left-justified. You can pipe to an additional function called `kable_styling()` which allows further customization of pdf tables. By default, this function will center the table. It may also do a weird LaTeX thing where the table ends up somewhere else in the document other than where you want it. To prevent that from happening, we can add the argument `latex_options = "hold_position"` (or `"HOLD_position"` if you're *really* serious).
@@ -144,6 +149,8 @@ Note: By default, the table is left-justified. You can pipe to an additional fun
 LaTeX is responsible for setting up our document formatting. Kniting/compiling actually creates a .tex document first that is converted into a .pdf. Learning some LaTeX can be very useful for trying to deal with issues as well as getting equations and symbols in the document in the format you want.
 
 Solution: (How many observations are in each data set? Write a sentence!)
+
+There are 142 observations for each of the datasets!
 
 ```{=html}
 <!-- 
@@ -176,7 +183,7 @@ dino_data %>%
 
 What does this correlation coefficient tell us about the relationship between `x` and `y` in the `dino` dataset?
 
-Solution:
+Solution: There's a weak negative association between x and y.
 
 > part b - A plot
 
@@ -190,7 +197,7 @@ You will learn about the philosophy of building data visualizations in detail ne
 
 ```{r}
 #| label: dino-plot
-#| eval: false
+#| eval: true
 #| fig-width: 2.5
 #| fig-height: 2
 
@@ -200,7 +207,7 @@ ggplot(data = dino_data, mapping = aes(x = x, y = y)) +
 
 What do you notice now about the relationship between x and y? Is using correlation as a summary measure appropriate?
 
-Solution:
+Solution: No, correlation as a summary measure isn't appropriate in this case. There is little correlation yet the data still reveals a pattern that is only visualised in the plot.
 
 ```{=html}
 <!-- 

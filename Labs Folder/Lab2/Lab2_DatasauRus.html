@@ -163,7 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="gradescope-upload" class="level2">
 <h2 class="anchored" data-anchor-id="gradescope-upload">Gradescope Upload</h2>
 <p>Our Practice0 assignment is designed to ensure you’ve successfully submitted an assignment to Gradescope before the first real assignment is due. No feedback will be provided on this assignment. Here’s how that will work when you are finished with the lab and have your final .pdf.</p>
-<p>For each question/part, allocate all pages associated with the specific question/part. Do your best with this. If your work for a question runs onto a page that you did not select, you may not get credit for the work. If you do not allocate <em>any</em> pages when you upload your pdf, you may get a zero for the assignment.</p>
+<p>For each question/part, allocate all pages associated with the specific question/part. Do your best with this. If your work for a question runs onto a page that you did not select, you may not get credit for the work. If you do n?ot allocate <em>any</em> pages when you upload your pdf, you may get a zero for the assignment.</p>
 <p>You can resubmit your work as many times as you want before the deadline, so you should absolutely not wait until the last minute to submit some version of your work. You should be compiling as you go, reducing the chance of last minute compiling issues. Your git repo will show when you’ve made commits, too. For this activity, I’ve provided the commit messages so they should show. If you do run into an issue, submit whatever you have completed to receive partial credit.</p>
 </section>
 <section id="come-together---make-sure-everyone-is-ready-before-moving-on" class="level2">
@@ -184,11 +184,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>part a - Based on the help file, how many rows and how many columns are in the data frame?</p>
 </blockquote>
-<p>Solution:</p>
+<p>Solution: There are 1846 rows with 3 columns.</p>
 <blockquote class="blockquote">
 <p>part b - Based on the help file, what variables are included in the data frame?</p>
 </blockquote>
-<p>Solution:</p>
+<p>Solution: There are 3 variables: the dataset, x and y values.</p>
 <p>Markdown allows you to do a lot in terms of formatting that you may not have seen before. For example, you can enter bulleted lists by using the following pattern:</p>
 <ul>
 <li>first item</li>
@@ -200,6 +200,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>part c - Use Markdown formatting to provide a bulleted list of the variables.</p>
 </blockquote>
 <p>Solution:</p>
+<ul>
+<li>dataset</li>
+<li>x</li>
+<li>y</li>
+</ul>
 <!--
 Check that when you knit you get what you expect. Extra space, or lack thereof, can change the formatting. The formatting used here means this text is a comment you see in the .Qmd/.Rmd but not in the .pdf. 
 -->
@@ -211,7 +216,7 @@ Check that when you knit you get what you expect. Extra space, or lack thereof, 
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">%&gt;%</span> </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(dataset) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">booktabs =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">booktabs =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <thead>
@@ -280,6 +285,7 @@ Check that when you knit you get what you expect. Extra space, or lack thereof, 
 <p>Note: By default, the table is left-justified. You can pipe to an additional function called <code>kable_styling()</code> which allows further customization of pdf tables. By default, this function will center the table. It may also do a weird LaTeX thing where the table ends up somewhere else in the document other than where you want it. To prevent that from happening, we can add the argument <code>latex_options = "hold_position"</code> (or <code>"HOLD_position"</code> if you’re <em>really</em> serious).</p>
 <p>LaTeX is responsible for setting up our document formatting. Kniting/compiling actually creates a .tex document first that is converted into a .pdf. Learning some LaTeX can be very useful for trying to deal with issues as well as getting equations and symbols in the document in the format you want.</p>
 <p>Solution: (How many observations are in each data set? Write a sentence!)</p>
+<p>There are 142 observations for each of the datasets!</p>
 <!-- 
 TIME TO COMMIT! After you've added your responses to the parts above for the first problem, knit to make sure things are still working and the pdf looks the way you want, and commit your changes to the Rmd file with the commit message "Add answers to problem 1"
 -->
@@ -310,7 +316,7 @@ TIME TO COMMIT! After you've added your responses to the parts above for the fir
 </div>
 </div>
 <p>What does this correlation coefficient tell us about the relationship between <code>x</code> and <code>y</code> in the <code>dino</code> dataset?</p>
-<p>Solution:</p>
+<p>Solution: There’s a weak negative association between x and y.</p>
 <blockquote class="blockquote">
 <p>part b - A plot</p>
 </blockquote>
@@ -321,9 +327,12 @@ TIME TO COMMIT! After you've added your responses to the parts above for the fir
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dino_data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab2_DatasauRus_files/figure-html/dino-plot-1.png" class="img-fluid" width="240"></p>
+</div>
 </div>
 <p>What do you notice now about the relationship between x and y? Is using correlation as a summary measure appropriate?</p>
-<p>Solution:</p>
+<p>Solution: No, correlation as a summary measure isn’t appropriate in this case. There is little correlation yet the data still reveals a pattern that is only visualised in the plot.</p>
 <!-- 
 TIME TO KNIT & COMMIT: "Add answers to first parts of problem 2"
 -->
