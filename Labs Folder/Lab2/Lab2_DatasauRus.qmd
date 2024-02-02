@@ -1,8 +1,8 @@
 ---
 title: "Lab2_DatasauRus"
-author: "Bilal Tariq"
+author: "BilalTariq"
 date: "2024-01-31"
-format: html
+format: pdf
 editor: visual
 ---
 
