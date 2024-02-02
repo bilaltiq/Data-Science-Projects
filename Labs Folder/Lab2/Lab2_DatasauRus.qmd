@@ -78,7 +78,7 @@ You MUST push a final version of each lab .Qmd.Rmd and .pdf to your repo for our
 
 Our Practice0 assignment is designed to ensure you've successfully submitted an assignment to Gradescope before the first real assignment is due. No feedback will be provided on this assignment. Here's how that will work when you are finished with the lab and have your final .pdf.
 
-For each question/part, allocate all pages associated with the specific question/part. Do your best with this. If your work for a question runs onto a page that you did not select, you may not get credit for the work. If you do n?ot allocate *any* pages when you upload your pdf, you may get a zero for the assignment.
+For each question/part, allocate all pages associated with the specific question/part. Do your best with this. If your work for a question runs onto a page that you did not select, you may not get credit for the work. If you do not allocate *any* pages when you upload your pdf, you may get a zero for the assignment.
 
 You can resubmit your work as many times as you want before the deadline, so you should absolutely not wait until the last minute to submit some version of your work. You should be compiling as you go, reducing the chance of last minute compiling issues. Your git repo will show when you've made commits, too. For this activity, I've provided the commit messages so they should show. If you do run into an issue, submit whatever you have completed to receive partial credit.
 
@@ -364,10 +364,12 @@ Let's explore how these options work when compared to the default settings. Add 
 
 After trying out the options, to complete this part, use appropriate options to output the correlations but not show any of the code used to get them.
 
-Solution:
+Solution: When echo is false the code chunk is not displayed when knitting. When eval is false, when knitting the program will not run the chunk. When include is false, the chunk will be run but not included in the final document and when collapse is true, all the chunks made by that chunked are 'collapsed' into a single block.
 
 ```{r }
 #| label: test-chunk-options
+#| eval: true
+#| echo: false
 
 # Correlations by dataset (plain R output)
 datasaurus_dozen %>%
@@ -387,7 +389,7 @@ You can use the `round` command to get a sensible number of digits: The mean $x$
 
 Use inline R coding to write a sentence about the standard deviation of $x$ in the dino dataset reported to 1 decimal place.
 
-Solution:
+Solution: The dino's variable x has a standard deviation of `r sd(dino_data$x) %>% round(1)`.
 
 > part c - Text versus code formatting
 
@@ -408,9 +410,13 @@ Fix the code chunk below so that neither the comment (which you can rewrite) nor
 Solution:
 
 ```{r}
-# want to get the correlation between Sepal.Length and Sepal.Width for all three iris species in the data set
+# get the correlation between Sepal.Length and Sepal.Width for all three 
+# iris species in the data set
 data(iris)
-iris %>% select(Species, Sepal.Length, Sepal.Width) %>% group_by(Species) %>% summarize(correlation = cor(Sepal.Length, Sepal.Width)) 
+iris %>% 
+  select(Species, Sepal.Length, Sepal.Width) %>% 
+  group_by(Species) %>% 
+  summarize(correlation = cor(Sepal.Length, Sepal.Width)) 
 ```
 
 ```{=html}

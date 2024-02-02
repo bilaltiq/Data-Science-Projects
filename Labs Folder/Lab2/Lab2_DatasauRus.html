@@ -163,7 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="gradescope-upload" class="level2">
 <h2 class="anchored" data-anchor-id="gradescope-upload">Gradescope Upload</h2>
 <p>Our Practice0 assignment is designed to ensure you’ve successfully submitted an assignment to Gradescope before the first real assignment is due. No feedback will be provided on this assignment. Here’s how that will work when you are finished with the lab and have your final .pdf.</p>
-<p>For each question/part, allocate all pages associated with the specific question/part. Do your best with this. If your work for a question runs onto a page that you did not select, you may not get credit for the work. If you do n?ot allocate <em>any</em> pages when you upload your pdf, you may get a zero for the assignment.</p>
+<p>For each question/part, allocate all pages associated with the specific question/part. Do your best with this. If your work for a question runs onto a page that you did not select, you may not get credit for the work. If you do not allocate <em>any</em> pages when you upload your pdf, you may get a zero for the assignment.</p>
 <p>You can resubmit your work as many times as you want before the deadline, so you should absolutely not wait until the last minute to submit some version of your work. You should be compiling as you go, reducing the chance of last minute compiling issues. Your git repo will show when you’ve made commits, too. For this activity, I’ve provided the commit messages so they should show. If you do run into an issue, submit whatever you have completed to receive partial credit.</p>
 </section>
 <section id="come-together---make-sure-everyone-is-ready-before-moving-on" class="level2">
@@ -528,12 +528,8 @@ TIME TO KNIT & COMMIT: "Add answers to Problem 3"
 <li><code>#| collapse: true</code> OR Rmd version <code>collapse = TRUE</code>:</li>
 </ul>
 <p>After trying out the options, to complete this part, use appropriate options to output the correlations but not show any of the code used to get them.</p>
-<p>Solution:</p>
+<p>Solution: When echo is false the code chunk is not displayed when knitting. When eval is false, when knitting the program will not run the chunk. When include is false, the chunk will be run but not included in the final document and when collapse is true, all the chunks made by that chunked are ‘collapsed’ into a single block.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlations by dataset (plain R output)</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dataset) <span class="sc">%&gt;%</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r =</span> <span class="fu">cor</span>(x, y) <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">3</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 2
    dataset         r
@@ -561,7 +557,7 @@ TIME TO KNIT & COMMIT: "Add answers to Problem 3"
 <p>The dino dataset contains 142 observations and has 3 variables. The mean <span class="math inline">\(x\)</span> value is 54.2632732 units and the mean <span class="math inline">\(y\)</span> value is 47.8322528 units.</p>
 <p>You can use the <code>round</code> command to get a sensible number of digits: The mean <span class="math inline">\(x\)</span> value is 54.3 units and the mean <span class="math inline">\(y\)</span> value is 47.8 units.</p>
 <p>Use inline R coding to write a sentence about the standard deviation of <span class="math inline">\(x\)</span> in the dino dataset reported to 1 decimal place.</p>
-<p>Solution:</p>
+<p>Solution: The dino’s variable x has a standard deviation of 16.8.</p>
 <blockquote class="blockquote">
 <p>part c - Text versus code formatting</p>
 </blockquote>
@@ -574,9 +570,13 @@ TIME TO KNIT & COMMIT: "Add answers to Problem 3"
 <p>Fix the code chunk below so that neither the comment (which you can rewrite) nor the code goes off the edge of the page, following the coding style described and demonstrated above.</p>
 <p>Solution:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># want to get the correlation between Sepal.Length and Sepal.Width for all three iris species in the data set</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">select</span>(Species, Sepal.Length, Sepal.Width) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">correlation =</span> <span class="fu">cor</span>(Sepal.Length, Sepal.Width)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the correlation between Sepal.Length and Sepal.Width for all three </span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># iris species in the data set</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Species, Sepal.Length, Sepal.Width) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">correlation =</span> <span class="fu">cor</span>(Sepal.Length, Sepal.Width)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   Species    correlation
