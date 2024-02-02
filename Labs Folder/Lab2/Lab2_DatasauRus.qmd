@@ -218,13 +218,38 @@ TIME TO KNIT & COMMIT: "Add answers to first parts of problem 2"
 
 Now calculate the correlation coefficient between `x` and `y` for the `star` dataset. You can (and should) reuse code we introduced above, after pasting it below, just replace the dataset name with the desired dataset. How does this value compare to the correlation coefficient from the `dino` dataset?
 
-Solution:
+```{r}
+#| label: star-cor
+
+# Start with `datasaurus_dozen`
+# Filter for observations where `dataset == "star"`
+# Store the resulting filtered data frame as a new data frame called `star_data`
+star_data <- datasaurus_dozen %>%
+  filter(dataset == "star")
+
+# Compute correlation between `x` and `y` for `dino` dataset with label `r`
+star_data %>%
+  summarize(r = cor(x, y))
+```
+
+Solution: This is another weak correlation between the x and y values just like the dino dataset.
 
 > part d - Another plot
 
 Plot `y` versus `x` for the `star` dataset. Does the plot look the same as the plot of the `dino` data? Is correlation an appropriate summary measure?
 
-Solution:
+```{r}
+#| label: star-plot
+#| eval: true
+#| fig-width: 2.5
+#| fig-height: 2
+
+ggplot(data = star_data, mapping = aes(x = x, y = y)) +
+  geom_point()
+
+```
+
+Solution: Again, correlation isn't an appropriate summary measure because there are patterns in the data that are seen on the plot.
 
 ```{=html}
 <!-- 
@@ -235,13 +260,38 @@ TIME TO KNIT & COMMIT: "Add answers to middle parts of problem 2"
 
 Now calculate the correlation coefficient between `x` and `y` for the `circle` dataset. You can (and should) reuse code we introduced above, after pasting it below, just replace the dataset name with the desired dataset. How does this value compare to the correlation coefficients from the other two datasets?
 
-Solution:
+```{r}
+#| label: circle-cor
+
+# Start with `datasaurus_dozen`
+# Filter for observations where `dataset == "circle"`
+# Store the resulting filtered data frame as a new data frame called `circle_data`
+circle_data <- datasaurus_dozen %>%
+  filter(dataset == "circle")
+
+# Compute correlation between `x` and `y` for `dino` dataset with label `r`
+circle_data %>%
+  summarize(r = cor(x, y))
+```
+
+Solution: This value is similar to the previous two datasets with a weak negative correlaton.
 
 > part f - A final plot
 
 Plot `y` versus `x` for the `circle` dataset. Does the plot look the same as either plot from the other two datasets?
 
-Solution:
+```{r}
+#| label: circle-plot
+#| eval: true
+#| fig-width: 2.5
+#| fig-height: 2
+
+ggplot(data = circle_data, mapping = aes(x = x, y = y)) +
+  geom_point()
+
+```
+
+Solution: The plot does not look the same, it is very distinct and dissimilar from the previous two plots. 
 
 ```{=html}
 <!-- 

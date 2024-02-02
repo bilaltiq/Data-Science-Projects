@@ -340,12 +340,36 @@ TIME TO KNIT & COMMIT: "Add answers to first parts of problem 2"
 <p>part c - Another correlation</p>
 </blockquote>
 <p>Now calculate the correlation coefficient between <code>x</code> and <code>y</code> for the <code>star</code> dataset. You can (and should) reuse code we introduced above, after pasting it below, just replace the dataset name with the desired dataset. How does this value compare to the correlation coefficient from the <code>dino</code> dataset?</p>
-<p>Solution:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start with `datasaurus_dozen`</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for observations where `dataset == "star"`</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the resulting filtered data frame as a new data frame called `star_data`</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>star_data <span class="ot">&lt;-</span> datasaurus_dozen <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dataset <span class="sc">==</span> <span class="st">"star"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute correlation between `x` and `y` for `dino` dataset with label `r`</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>star_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r =</span> <span class="fu">cor</span>(x, y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+        r
+    &lt;dbl&gt;
+1 -0.0630</code></pre>
+</div>
+</div>
+<p>Solution: This is another weak correlation between the x and y values just like the dino dataset.</p>
 <blockquote class="blockquote">
 <p>part d - Another plot</p>
 </blockquote>
 <p>Plot <code>y</code> versus <code>x</code> for the <code>star</code> dataset. Does the plot look the same as the plot of the <code>dino</code> data? Is correlation an appropriate summary measure?</p>
-<p>Solution:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> star_data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab2_DatasauRus_files/figure-html/star-plot-1.png" class="img-fluid" width="240"></p>
+</div>
+</div>
+<p>Solution: Again, correlation isn’t an appropriate summary measure because there are patterns in the data that are seen on the plot.</p>
 <!-- 
 TIME TO KNIT & COMMIT: "Add answers to middle parts of problem 2"
 -->
@@ -353,12 +377,36 @@ TIME TO KNIT & COMMIT: "Add answers to middle parts of problem 2"
 <p>part e - A final correlation</p>
 </blockquote>
 <p>Now calculate the correlation coefficient between <code>x</code> and <code>y</code> for the <code>circle</code> dataset. You can (and should) reuse code we introduced above, after pasting it below, just replace the dataset name with the desired dataset. How does this value compare to the correlation coefficients from the other two datasets?</p>
-<p>Solution:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start with `datasaurus_dozen`</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for observations where `dataset == "circle"`</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the resulting filtered data frame as a new data frame called `circle_data`</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>circle_data <span class="ot">&lt;-</span> datasaurus_dozen <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dataset <span class="sc">==</span> <span class="st">"circle"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute correlation between `x` and `y` for `dino` dataset with label `r`</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>circle_data <span class="sc">%&gt;%</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r =</span> <span class="fu">cor</span>(x, y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+        r
+    &lt;dbl&gt;
+1 -0.0683</code></pre>
+</div>
+</div>
+<p>Solution: This value is similar to the previous two datasets with a weak negative correlaton.</p>
 <blockquote class="blockquote">
 <p>part f - A final plot</p>
 </blockquote>
 <p>Plot <code>y</code> versus <code>x</code> for the <code>circle</code> dataset. Does the plot look the same as either plot from the other two datasets?</p>
-<p>Solution:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> circle_data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab2_DatasauRus_files/figure-html/circle-plot-1.png" class="img-fluid" width="240"></p>
+</div>
+</div>
+<p>Solution: The plot does not look the same, it is very distinct and dissimilar from the previous two plots.</p>
 <!-- 
 TIME TO KNIT & COMMIT: "Add answers to final parts of problem 2"
 -->
@@ -374,17 +422,17 @@ TIME TO KNIT & COMMIT: "Add answers to final parts of problem 2"
 <p>Solution:</p>
 <!-- set `eval: true` and adjust the figure dimensions so things don't look smushed in the pdf -->
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplots by dataset</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datasaurus_dozen, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> dataset))<span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> dataset, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlations by dataset</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">%&gt;%</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dataset) <span class="sc">%&gt;%</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r =</span> <span class="fu">cor</span>(x, y)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">booktabs =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplots by dataset</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datasaurus_dozen, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> dataset))<span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> dataset, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlations by dataset</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">%&gt;%</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dataset) <span class="sc">%&gt;%</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r =</span> <span class="fu">cor</span>(x, y)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">booktabs =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>part b - What do you notice? Is the correlation coefficient an appropriate summary for any of these datasets? Why or why not?</p>
@@ -416,10 +464,10 @@ TIME TO KNIT & COMMIT: "Add answers to Problem 3"
 <p>After trying out the options, to complete this part, use appropriate options to output the correlations but not show any of the code used to get them.</p>
 <p>Solution:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlations by dataset (plain R output)</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dataset) <span class="sc">%&gt;%</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r =</span> <span class="fu">cor</span>(x, y) <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">3</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlations by dataset (plain R output)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dataset) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r =</span> <span class="fu">cor</span>(x, y) <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">3</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 2
    dataset         r
@@ -460,9 +508,9 @@ TIME TO KNIT & COMMIT: "Add answers to Problem 3"
 <p>Fix the code chunk below so that neither the comment (which you can rewrite) nor the code goes off the edge of the page, following the coding style described and demonstrated above.</p>
 <p>Solution:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># want to get the correlation between Sepal.Length and Sepal.Width for all three iris species in the data set</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">select</span>(Species, Sepal.Length, Sepal.Width) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">correlation =</span> <span class="fu">cor</span>(Sepal.Length, Sepal.Width)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># want to get the correlation between Sepal.Length and Sepal.Width for all three iris species in the data set</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">select</span>(Species, Sepal.Length, Sepal.Width) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">correlation =</span> <span class="fu">cor</span>(Sepal.Length, Sepal.Width)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   Species    correlation
