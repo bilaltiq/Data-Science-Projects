@@ -81,7 +81,7 @@ unvotes_hr <- un_votes %>%
   inner_join(un_roll_calls, by = "rcid") %>%
   inner_join(un_roll_call_issues, by = "rcid") %>% 
   filter(issue == "Human rights", 
-         country %in% c("Cameroon",
+         country %in% c("Pakistan",
                         "Iceland",
                         "Fiji")) %>% 
   group_by(country, year = year(date), issue) %>%
@@ -96,17 +96,17 @@ This new data set is called *unvotes_hr* where the hr is for Human Rights, the i
 
 > What might be a reasonable name for a new data set if you wanted to focus on the issue: Economic development?
 
-Solution:
+Solution: CountryEcononomics
 
 Saving the data set is different than what was done in the previous lab. There, since we only made one visual, we didn't really need to save it. Saving it is useful if we expect to re-use it several times.
 
 > What piece of the code does the assignment/saving of the new data set?
 
-Solution:
+Solution: \<-
 
 > The %\>% set of symbols occurs often here. Do you know what this symbol is? If so, what is it?
 
-Solution:
+Solution: This is a pipe which passes the command from one line to the next.
 
 (This will come up more with wrangling, but since it's here now, we can discuss it.)
 
@@ -114,13 +114,13 @@ There is a newer "pipe" \|\> that you can use as well. For details/differences, 
 
 > The issue == "Human Rights" line pulls out only that issue. What do you think changing the == to != would do?
 
-Solution:
+Solution: It would pull out every issue except the Human Rights
 
 (If you change this to check, be sure to put it back to == before continuing and re-run the chunk.)
 
 > Code options - What would setting eval: false in the code chunk do? Would this be wise if we plan to use the data set for visuals in the rest of the document that we want to show in the knitted pdf?
 
-Solution:
+Solution: Setting it to false means the code chunk won't be evaluated
 
 \newpage
 
