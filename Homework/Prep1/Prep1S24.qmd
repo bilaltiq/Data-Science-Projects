@@ -87,15 +87,15 @@ Solution:
 <!-- You may adjust figure size as needed in the .pdf. Defaults are specified above but you should always check what your finished product looks like. Turn eval to true so this shows in your solution. -->
 
 ```{r}
-#| eval: false
+#| eval: true
 
 data(CIACountries)
 
 # define the plot object
-g <- 
+g <- ggplot(data=CIACountries,aes(y=gdp,x=educ))
 
 # print the plot
-g
+g + geom_point(aes(color=net_users),size=3)
 ```
 
 > part b - Now, update the plot with more informative labels. Label the x-axis "% of GDP spent on education" and the y-axis "Gross Domestic Product (GDP)".
@@ -106,6 +106,15 @@ Solution:
 
 ```{r}
 
+data(CIACountries)
+
+g <- ggplot(data=CIACountries,aes(y=gdp,x=educ))
+
+g + geom_point(aes(color=net_users),size=3) +
+  scale_y_continuous(name= "Gross Domestic Product (GDP)") +
+  scale_x_continuous(name= "% of GDP spent on education")
+
+
 ```
 
 > part c - Next, move the legend so that it's located on the top of the plot as opposed to the right of the plot.
@@ -115,7 +124,14 @@ Solution:
 Solution:
 
 ```{r}
+data(CIACountries)
 
+g <- ggplot(data=CIACountries,aes(y=gdp,x=educ))
+
+g + geom_point(aes(color=net_users),size=3) +
+  scale_y_continuous(name= "Gross Domestic Product (GDP)") +
+  scale_x_continuous(name= "% of GDP spent on education") + 
+  theme(legend.position = "top")
 ```
 
 > part d - Lastly, Section 3.1.2 discusses *scale*, and demonstrates how to display GDP on a logarithmic scale to better discern differences in GDP. Update the figure so GDP is on a log10 scale.
@@ -123,6 +139,14 @@ Solution:
 Solution:
 
 ```{r}
+data(CIACountries)
+
+g <- ggplot(data=CIACountries,aes(y=gdp,x=educ))
+
+g + geom_point(aes(color=net_users),size=3) +
+  scale_y_continuous(name= "Gross Domestic Product (GDP)",trans = "log10",labels = scales::comma) +
+  scale_x_continuous(name= "% of GDP spent on education") + 
+  theme(legend.position = "top") 
 
 ```
 
