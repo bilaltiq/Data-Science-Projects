@@ -167,23 +167,25 @@ Note: for this problem, you aren't actually making any of the plots.
 
 > part a - Use one of data set overview commands to look at iris. List whether each variable is numeric or categorical (quantitative vs. qualitative).
 
-Solution:
+Solution: Numeric: Sepal length, Sepal width, Petal Length, Petal width\
+Categorical: Species
 
 ```{r}
 data(iris) 
+summary(iris)
 ```
 
 > part b - Suppose we want to examine the distribution of Petal.Width. What plot would you recommend for this?
 
-Solution:
+Solution: A scatter plot that uses color to identify the different species
 
 > part c - Suppose we want to examine the distribution of Species. What plot would you recommend for this?
 
-Solution:
+Solution: A histogram
 
 > part d - We want to examine the relationship between Petal.Width and Petal.Length across Species. However, our client insists the graphic be printed in black and white. What plot would you recommend for this? Be sure to name the plot and describe how all three variables are represented/included.
 
-Solution:
+Solution: We will be using a scatter plot with Petal Width on the x axis and Petal Length on the y axis. Furthermore, there will be a legend on the side which will differentiate between the 3 species by using different types of shading (i.e filled circle, half filled circle, dotted circle).
 
 \newpage
 
