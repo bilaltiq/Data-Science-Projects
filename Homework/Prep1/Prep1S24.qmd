@@ -195,7 +195,7 @@ Solution: We will be using a scatter plot with Petal Width on the x axis and Pet
 
 > part a - Consider Figure 3.8 in Section 3.1.5. What does `reorder(drg, mean_charge)` do? To figure this out, recreate the plot, but use `x = drg` instead of `x = reorder(drg, mean_charge)`. What happens?
 
-Solution:
+Solution: We see that the reorder function sorts the x values with the lowest Statewide average Charges at the left and the highest Statewide average charges to the right.
 
 <!--Turn eval to true so this shows in your solution.-->
 
@@ -208,9 +208,15 @@ ChargesNJ <- MedicareCharges %>%
   filter(stateProvider == "NJ")
 
 # create the plot object
-p <- 
-  
-  
+p <- ggplot(
+  data = ChargesNJ, 
+  aes(x = reorder(drg, mean_charge), y = mean_charge)
+) +
+  geom_col(fill = "gray") +
+  ylab("Statewide Average Charges ($)") + 
+  xlab("Medical Procedure (DRG)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = rel(0.5)))
+
 # print the plot
 p
 ```
@@ -219,7 +225,7 @@ p
 
 *Hint: The package is in curly brackets after the name of the function in the help menu.*
 
-Solution:
+Solution: It is from the stats package. The dataset used in the help example is InsectSprays.
 
 Note: Normally, you'd look through the help information to learn about the function, it's arguments, outputs, etc. This problem is designed so you learn about the help menu, not to really focus on this function. That said, you should know what *reorder* does at the end of the problem. You can also access R documentation via the internet, rather than through R.
 
@@ -227,7 +233,7 @@ Note: Normally, you'd look through the help information to learn about the funct
 
 *Hint: You can also find this where the packages are loaded in above. If there are conflicts, the most recently loaded package's function masks the function from previously loaded packages. You should see a notice of masking here in regards to filter (and lag).*
 
-Solution:
+Solution: The stats package and the dplyr package have a result for a filter function.
 
 Note: If you are ever worried about a function conflict between packages, or want to use just one function (or data set) from a package without loading the entire rest of the package, you can reference the function this way - package::function. You will see this occasionally in our work this semester.
 
