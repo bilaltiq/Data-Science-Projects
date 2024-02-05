@@ -45,15 +45,15 @@ In addition to reading, I recommend you code along with the book examples. You'l
 
 Chapter 2 describes Yao's taxonomy for graphics (which is very similar to what ggplot2 uses). The four basic elements are visual cues, coordinate systems, scale, and context.
 
-> part a - Name two of the best visual cues.
+> part a - Position and Length
 
 Solution:
 
-> part b - Name a coordinate system other than the usual Cartesian coordinate system.
+> part b - Polar Coordinate System
 
 Solution:
 
-> part c - Name a numeric scale other than the usual linear scale.
+> part c - Time
 
 Solution:
 
@@ -70,7 +70,7 @@ ggplot(iris, aes(x = Petal.Length, y = Sepal.Length, color = Species))+
        subtitle = "For all 3 iris Species")
 ```
 
-Solution:
+Solution: It has a clear Title ("Scatterplot of Sepal and Petal Lengths") with an adequate subtitle ("For all 3 iris species"). It has axis labels of Petal Length and Sepal Length. Additionally, it has a legend on the side to identify the different lines.
 
 \newpage
 
