@@ -146,6 +146,7 @@ ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes,
                                         color = country)) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE) +
+  facet_wrap(~country)
   labs(title = "Percentage of 'Yes' votes  on human rights issues",
        subtitle = "UN General Assembly, 1946 to 2019",
        y = "% Yes",
@@ -155,35 +156,65 @@ ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes,
 
 > Suppose you want to have the original plot but with different plots for each country side-by-side (you can have separate colors or not). What is the option to do this? Implement it.
 
-Solution:
+Solution: We can do facet_wrap(\~country) which would show them side by side.
 
 ```{r}
 #| label: side-by-side
 #| fig-width: 6.5
 #| fig-height: 3
 
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_point(shape = 2) +
+  geom_smooth(method = "loess", se = FALSE) +
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country")
+
 ```
 
 > Undo the option you added in the last plot (i.e. return to the original). Try adding `shape = 2` to the `geom_point()` function. What happens?
 
-Solution:
+Solution: The circle points turn into triangles
 
 ```{r}
 #| label: shape2
 #| fig-width: 6.5
 #| fig-height: 3
 
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_point(shape = "*", size = 5) +
+  geom_smooth(method = "loess", se = FALSE) +
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country")
+
 
 ```
 
 > What happens if you add `shape = "*", size = 5` to `geom_point()` intead?
 
-Solution:
+Solution: They turn into asterisks with a larger point size
 
 ```{r}
 #| label: shape-size
 #| fig-width: 6.5
 #| fig-height: 3
+
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_point(aes(shape=country)) +
+  geom_smooth(method = "loess", se = FALSE) +
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country")
 
 ```
 
@@ -191,12 +222,23 @@ You can also specify different shapes for the different countries. Since country
 
 > See if you can figure out the correct syntax to use different shapes for your selected countries. Can you also figure out how to clean up the legend? (*Hint*: add something to the `labs()` function.)
 
-Solution:
+Solution: To clean up the legend, we add shape = "country"
 
 ```{r}
 #| label: country-shape
 #| fig-width: 6.5
 #| fig-height: 3
+
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_point(aes(shape=country)) +
+  geom_smooth(method = "loess", se = FALSE) +
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country",
+       shape = "Country")
 
 ```
 
