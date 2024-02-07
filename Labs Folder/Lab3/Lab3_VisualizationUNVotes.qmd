@@ -264,6 +264,17 @@ Solution:
 #| fig-width: 6.5
 #| fig-height: 3
 
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, aes(lty = country)) +
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country",
+       lty = "Country")
+
 
 ```
 
@@ -271,12 +282,23 @@ The `geom_smooth` function also allows you to fit regression lines. You have to 
 
 > Add regression lines instead of smoothed lines to the plot. Keep different line types. Does regression seem appropriate?
 
-Solution:
+Solution: No, regression does not seem appropriate in this scenario as it does not show the variations well enough on the y axis.
 
 ```{r}
 #| label: country-lm
 #| fig-width: 6.5
 #| fig-height: 3
+
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, aes(lty = country)) +
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country",
+       lty = "Country")
 
 
 ```
@@ -287,6 +309,16 @@ Solution:
 #| label: country-aesloc
 #| fig-width: 6.5
 #| fig-height: 3
+
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        )) +
+  geom_point(aes(color = country)) +
+  geom_smooth(method = "loess", se = FALSE, aes(lty = country)) +
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       lty = "Country")
 
 
 ```
