@@ -1,12 +1,13 @@
 ---
 title: "calendar_proposal_template"
-author: "Your Name"
+author: "BilalTariq"
 format: pdf
 editor: visual
 ---
 
 # Calendar Query Proposal
 
+```{=html}
 <!--
 This is a recap from the assignment. 
 
@@ -24,25 +25,19 @@ Feel free to expand upon the basic question of "Where does my time go?" or "How 
 
 Note: You are not bound to the ideas you record here.  The visualizations and table can change before your final submission.  However, I want to make sure your plan aligns with your questions, that your project is manageable, and that you're on the right track (i.e. that you'll end up with data that lets you do something meaningful).
 -->
+```
+## What questions are you planning to focus on?
 
-
-## What questions are you planning to focus on? 
-
-
-
-
+I am planning on focusing on time spent on courses vs. work vs. sleep. In this scenario, I want to see how the major 3 activities of my day actually go by.
 
 ## Describe two visualizations (type of plot, coordinates, visual cues, etc.) you imagine creating that help address your questions of interest.
 
+I would use a boxplot visualisation to see the average and the quartiles of the amount of hours I spend on these activities. I would use different colors to show the different boxplots (alternatively, I may just consider generating 3 boxplots for each of the categories). Furthermore, I would use a bar graph to compare the total number of hours in the two weeks spent on these activities.
 
+## Describe one table you imagine creating that helps address your questions of interest (what summary statistics will you present? what will the rows be? what will the columns be?).
 
-
-## Describe one table you imagine creating that helps address your questions of interest  (what summary statistics will you present? what will the rows be? what will the columns be?).
-
-
-
+I imagine creating a table for the boxplots where in the rows we would have the different activities and in the columns we will have the mean, median, mode, interquartile ranges and total time spent on these activities.
 
 <!-- Remember the visuals and table should convey different information. -->
 
 ## Do you have any questions for me as we get started with this project?
-
