@@ -338,14 +338,23 @@ There are many different ways to change the colors of points, lines, etc. in `gg
 
 > Copy your smoothed lines by country code from the last exercise (first plot from that section). Add a layer `scale_color_brewer()` before the `labs()` layer (don't forget to add a plus sign). What happens?
 
-Solution:
+Solution: Colors appear which have a similar shade to distinguish between the countries.
 
 ```{r}
 #| label: brewer
 #| fig-width: 6.5
 #| fig-height: 3
 
-
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE) +
+  scale_color_brewer()+
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country")
 ```
 
 > Within the `scale_color_brewer()` function, add the options `type = "div"` and `palette = 1`. Is this a good color scheme for this figure? Why or why not? (Can you think of a figure for which this would be a good color scheme?)
@@ -357,6 +366,17 @@ Solution:
 #| fig-width: 6.5
 #| fig-height: 3
 
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE) +
+  scale_color_brewer(type="div",palette=1)+
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country")
+
 
 ```
 
@@ -364,12 +384,23 @@ Check out the [scale brewer reference manual](https://ggplot2.tidyverse.org/refe
 
 > Does a sequential, diverging, or qualitative color scheme make sense for this figure? Update the figure with one of the palettes from the appropriate scheme.
 
-Solution:
+Solution: A qualitative color scheme makes sense for this plot because the divergent pallete has a white color which is not really visible.
 
 ```{r}
 #| label: brewer-schemes
 #| fig-width: 6.5
 #| fig-height: 3
+
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE) +
+  scale_color_brewer(type="qual",palette=1)+
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country")
 
 
 ```
@@ -388,6 +419,18 @@ Solution:
 #| fig-width: 6.5
 #| fig-height: 3
 
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE) +
+  scale_color_manual(values=c("green","purple","blue"))+
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country")
+
+
 ```
 
 > Don't like those colors? You can be more exact by specifying hex color codes. Try replacing "green", "purple" and "blue" with "#05a05a", "#844185", "#024a81", respectively.
@@ -399,18 +442,41 @@ Solution:
 #| fig-width: 6.5
 #| fig-height: 3
 
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE) +
+  scale_color_manual(values=c("#05a05a","#844185","#024a81"))+
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country")
+
+
 ```
 
 To identify hex codes for more colors, check out: [color-hex.com](https://www.color-hex.com/).
 
 > Create one last figure with three colors of your choice assigned manually.
 
-Solution:
+Solution: Lets use Purple, Turqoise, Blue
 
 ```{r}
 #| label: my-colors
 #| fig-width: 6.5
 #| fig-height: 3
+
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE) +
+  scale_color_manual(values=c("#40E0D0","#844185","#024a81"))+
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country")
 
 ```
 
@@ -429,7 +495,7 @@ Let's go back to our (almost) original plot to explore a few. This plot has the 
 
 > Change the geom_point() to geom_line(). What happens?
 
-Solution:
+Solution: The points are all joined togeteher with lines
 
 ```{r}
 #| label: original-plot-2
@@ -439,7 +505,7 @@ Solution:
 # plot the data  
 ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
                                         color = country)) +
-  geom_point() +
+  geom_line() +
   labs(title = "Percentage of 'Yes' votes  on human rights issues",
        subtitle = "UN General Assembly, 1946 to 2019",
        y = "% Yes",
@@ -453,24 +519,41 @@ For these next geoms, our data isn't set up in such a way that they really make 
 
 > Copy over the code from above and use geom_area instead of geom_line. What happens?
 
-Solution:
+Solution: bruh
 
 ```{r}
 #| label: geom-area
 #| fig-width: 6.5
 #| fig-height: 3
 
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_area() +
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country")
 
 ```
 
 > Now try geom_step. What happens?
 
-Solution:
+Solution: Each point is treated as a sort of "step". Not sure how to describe it
 
 ```{r}
 #| label: geom-step
 #| fig-width: 6.5
 #| fig-height: 3
+
+ggplot(data = unvotes_hr, mapping = aes(x = year, y = percent_yes, 
+                                        color = country)) +
+  geom_step() +
+  labs(title = "Percentage of 'Yes' votes  on human rights issues",
+       subtitle = "UN General Assembly, 1946 to 2019",
+       y = "% Yes",
+       x = "Year",
+       color = "Country")
 
 
 ```
@@ -483,7 +566,7 @@ Here's an example of interactivity.
 
 > What happens when you hover over this plot?
 
-Solution:
+Solution: For each specific point we can view the data for that by hovering over it
 
 ```{r}
 #| label: interactive
@@ -506,7 +589,7 @@ plotly::ggplotly(g)
 
 > Is the interactivity going to remain when you compile to pdf? Explain.
 
-Solution:
+Solution: No, the interactivity won't remain when we compile to a pdf because they are static formats and not dynamic and interactable.
 
 If you've finished and there is still time in the class period, be sure to think about what plots/geoms are appropriate for different types of variables, and ask questions you have about the material on visualizations.
 
