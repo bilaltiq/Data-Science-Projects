@@ -253,6 +253,12 @@ Solution:
 
 ```{r}
 
+g <- ggplot(data = MetabolicRate, aes(x = BodySize, y = Mrate)) + coord_trans(y="log10", x = "log10") + geom_point() + labs(title = "Body Size v.s Metabolic Rate", subtitle = "During Different Instar Phases" ,y = "Log of Metabolic Rate", x = "Log of Body Size in grams") + facet_grid(~Instar)
+
+
+
+g
+
 ```
 
 Going forward, every plot created for our assignments should have clear context in terms of good labels and a title. Be sure to get in the practice of using labs().
