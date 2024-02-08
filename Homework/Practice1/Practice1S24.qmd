@@ -159,6 +159,10 @@ Solution:
 
 ```{r}
 
+g <- ggplot(data=MLB_teams, mapping = aes(x=WPct, y=payroll)) + ggtitle("MLB Teams", "Winning Percentage v.s Payroll") + scale_x_continuous(name="Winning Percentage") + scale_y_continuous(name= "Payroll") +geom_point()
+
+g
+
 ```
 
 > part b - Now, add a third variable to your plot, making sure to update titles, labels, etc. as needed.
@@ -169,11 +173,15 @@ Solution:
 
 ```{r}
 
+g <- ggplot(data=MLB_teams, mapping = aes(x=WPct, y=payroll, color = attendance)) + ggtitle("MLB Teams", "Winning Percentage v.s Payroll") + scale_x_continuous(name="Winning Percentage") + scale_y_continuous(name= "Payroll", labels = scales::comma) +geom_point()
+
+g
+
 ```
 
 > part c - What story does your graph from part b tell?
 
-Solution:
+Solution: My graph shows the payroll of MLB Teams with respect to their winning percentage and also the amount of attendance they generally get in their matches.
 
 \newpage
 
@@ -199,19 +207,26 @@ Solution:
 
 ```{r}
 
+g <- ggplot(data=storms, aes(x = long, y=lat, color = name)) + geom_path() + facet_wrap(~year) + scale_color_discrete(guide = "none") + scale_y_continuous(name = "Latitude") + scale_x_continuous(name = "Longitude") + ggtitle("Variability in Storms", "From 1995 to 2000")
 
+
+g
 ```
 
 > part b - How useful do you find the legend of storm names and colors? If your overall goal was to just look for common paths, would you need the names? Is the plot in part a what you would consider accessible? What issues do you see with the plot? (We will not address all issues.)
 
-Solution:
+Solution: I don't find the names particularly useful as the color shades are very similar and the names take up too much space. We can simply get by without the names of the storms if we just needed to look for common paths. I wouldn't necessarily consider the plot accessible because the colors may be hard to distinguish for color-blind people.
 
 > part c - Remove the legend of storm names/colors by adding *scale_color_discrete(guide = "none")*. Be sure your final graph has appropriate labels and a title. Use your plot to discuss what year has the most "variability" in storm paths (in your opinion).
 
-Solution:
+Solution: I think 1995 has the most variability in storms because the storms spread over the widest latitude and longitude.
 
 ```{r}
 
+g <- ggplot(data=storms, aes(x = long, y=lat, color = name)) + geom_path() + facet_wrap(~year) + scale_color_discrete(guide = "none") + scale_y_continuous(name = "Latitude") + scale_x_continuous(name = "Longitude") + ggtitle("Variability in Storms", "From 1995 to 2000")
+
+
+g
 ```
 
 <!-- Remember to commit and push. -->
