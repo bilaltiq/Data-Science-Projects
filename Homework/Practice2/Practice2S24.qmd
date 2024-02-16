@@ -15,6 +15,7 @@ library(tidyverse)
 library(mdsr)
 library(kableExtra)
 library(Lahman)
+library(ggplot2)
 # add other packages here!
 ```
 
@@ -155,7 +156,7 @@ The `Violations` data set in the **mdsr** package contains information regarding
 
 > part a - Use these data to calculate the median violation score by zip code for zip codes in Manhattan. What pattern, if any, do you see between the number of inspections and the median score? Generate a visualization to support your response.
 
-Solution:
+Solution: There seems to be a positive correlation between the number of inspections and the median score.
 
 ```{r}
 # You will likely need to drop NA values in this process. 
@@ -163,6 +164,24 @@ Solution:
 # If you drop NAs too early, you will lose observations that had missing values
 # for variables you don't care about, and thus, lose information!
 # By getting just Manhattan, your final data set should have 81 obs.
+
+newViolations <- Violations %>%
+  select(boro, zipcode, score) %>%
+  filter(boro == "MANHATTAN") %>%
+  group_by(zipcode) %>%
+  na.omit() %>%
+  
+  summarise(
+    NumberViolations = n(),
+    MedianScore = median(score),
+  ) 
+
+ ggplot(newViolations, aes(x = NumberViolations, y = MedianScore)) +
+  geom_point() + 
+  geom_smooth(method = "lm") + labs(title = "Number of Violations V.S Median Score", x = "Number of Violations",y = "Median Score")
+  
+
+
 ```
 
 > part b - In your visualization above, there are several potential outliers but there is one zipcode in particular that does not seem to fall along the general trend. Add text to the outlier identifying what zipcode it is, and add an arrow pointing from the text to the observation. Note: first, you may want to `filter()` to identify the zipcode (so you know what text to add to the plot).
