@@ -178,6 +178,12 @@ Solution:
 
 ```{r}
 
+coverageSpending <- coverage3 %>%
+  full_join(spending3, by = join_by(Location)) %>%
+  select("2013__Employer", "2014__Employer") %>%
+  clean_names()
+glimpse(coverageSpending)
+
 ```
 
 > part d - Now, create the scatterplot! Describe what you see.
