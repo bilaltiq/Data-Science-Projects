@@ -16,6 +16,7 @@ library(robotstxt)
 library(kableExtra)
 library(haven)
 library(rvest)
+library(lubridate)
 ```
 
 Reminder: Prep assignments are to be completed individually. Upload a final copy of the .Rmd and renamed .pdf to your private repo, and submit the renamed pdf to Gradescope before the deadline (Sunday night, 2/18/24, by midnight).
@@ -137,8 +138,13 @@ Solution:
 ```{r}
 
 women_indoor <- tables %>%
-  purrr::pluck(13) %>%
-  html_table()
+  purrr::pluck(11) %>%
+  html_table() %>%
+  mutate(
+    Time = ms(Time),
+    Type = "Indoor"
+  )
+  
 
 ```
 
@@ -149,9 +155,13 @@ women_indoor <- tables %>%
 Remember the argument `booktabs = TRUE` is a quick way to make the table look nice!
 -->
 ```
-Solution:
+Solution: The indoor one-mile world record for IAAF women is held by Genzebe Dibaba and she has a time of 4:13.31.
 
 ```{r}
+
+kable(women_indoor, booktabs = TRUE)
+
+glimpse(women_indoor)
 
 ```
 
@@ -167,9 +177,24 @@ Read through all the desired items before beginning!
 
 <!-- Note: you can break a `kable` table across pages in the pdf by using the argument `longtable = TRUE` -->
 
-Solution:
+Solution: The fastest record was from an Outdoor event by Faith Kipyegon
 
 ```{r}
+
+women_outdoor <- tables %>%
+  purrr::pluck(9) %>%
+  html_table() %>%
+  mutate(
+    Time = ms(Time, quiet = FALSE, roll = TRUE),
+    Type = "Outdoor"
+  ) %>%
+  arrange(Time)
+  
+
+women_outdoorIndoor <- bind_rows(women_outdoor, women_indoor) %>%
+  select(Time, Athlete, Nationality, Date, Type)
+
+kable(women_outdoorIndoor)
 
 ```
 
