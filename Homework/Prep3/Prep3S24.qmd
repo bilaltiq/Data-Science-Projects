@@ -208,6 +208,10 @@ As we wrap up the chapter on ethics, what are three major takeaways from Chapter
 
 Solution:
 
+1.  Acknowledging that my data has real world impacts because it is from and affects real people. Scientists use this data to produce new technologies and evaluate new changes.
+2.  We need to be respectful of the privacy of the data, because consent was only given to us and we do not have the choice to present it in the wrong manner or give it out.
+3.  Instead of using biased data when trying to approach problems we should make sure that we include and evaluate a wide pool of people so as to get a broad range of inclusive data that helps decision making and limits bigotry.
+
 ```{=html}
 <!--
 Remember to do the final commit + push, this time including your renamed pdf, and upload to Gradescope.
