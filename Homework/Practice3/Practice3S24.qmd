@@ -121,6 +121,10 @@ Complete MDSR 8.6, which states: "A Slate article (http://tinyurl.com/slate-ethi
 
 Solution:
 
+Today, our world operates on our data being used (willingly or unwillingly). This results in rather unintended consequences that we couldn't have predicted, and these consequences escalate in their impact by the day. When it comes to using data, there is bound to be hidden nuance to a dataset that is not truly understood by the data scientist. In particular, when it comes to race, it is not clear what datasets are based on race or not. For example, when feeding data to machine learning models for image generation, there was a disproportionate amount of white males that popped up in those images but the models struggled with recreating faces of color because of the lack of data. Furthermore, as mentioned in the article, race is not just one category; it could be a factor in your ZIP code, in your income bracket, or how policed your neighbourhood is. \
+\
+As an International Muslim Pakistani student, I have struggled first hand with this as well, which is why as an aspiring data scientist it's my firm belief that we should monitor data and raise questions about it which encourage discourse. If the past data is biased, we should work towards making that not the case, and we should foster data points that do not involve predicting how long a family would be homeless based of their race/ethnicity.
+
 <!-- Have you committed and/or pushed yet? -->
 
 \newpage
