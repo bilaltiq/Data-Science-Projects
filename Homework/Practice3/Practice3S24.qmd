@@ -96,7 +96,7 @@ video_game_table_cleaned <- clean_names(video_game_data) %>%
 
 
 
-kable(video_game_table, booktabs = TRUE)
+kable(video_game_table_cleaned, booktabs = TRUE)
 
 
 
@@ -143,6 +143,12 @@ Solution:
 
 ```{r}
 
+url <- "https://forecast.weather.gov/MapClick.php?lat=42.3909&lon=-72.5283"
+
+weatherurl <- url
+
+paths_allowed(weatherurl) #paths_allowed is true
+
 ```
 
 In class, we accessed the table of current conditions and the extended forecast temperatures for the Amherst page via text. Above but near the table of current conditions is information about the local site the conditions are taken from. This includes the latitude, longitude, and elevation of the site.
@@ -155,6 +161,14 @@ Note: The information does not need to be presented nicely - I just want you to 
 -->
 ```
 ```{r}
+
+weather_location_info <- weatherurl %>%
+  read_html() %>%
+  html_elements(".smallTxt") %>%
+  pluck(1) %>%
+  html_text()
+
+print(weather_location_info)
 
 ```
 
