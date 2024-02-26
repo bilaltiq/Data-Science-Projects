@@ -54,6 +54,10 @@ Your final *calendar-query* project folder should be organized such that file na
 ```
 # Introduction
 
+We all are familiar with the same loop: you wake up ready for a brand new day at 9am with so much energy, and all of a sudden you look at the clock it's 2am and you still haven't finished your physics assignments. Where does all your time go? More specifically, how is an average college student's time (like mine) divided between each of his courses, work routine and sleep, and in which locations? These are the questions that I aim to tackle in this report.
+
+But why is knowing where our time is spent important in the first place? I realize that over the course of a semester our lives become rather disorganized and haphazard. We also get stuck in the same routine, in the same places, over and over again. By looking at ***where*** I spend my time and ***how,*** I am able to then consider how I could optimize work efficiency and change up where I work; this would in turn allow me to have more time for friends and activities and meet new people in new places.
+
 ```{=html}
 <!--
 Describe the questions of interest: what are they and why are they important or useful to you?
