@@ -33,6 +33,7 @@ library(ical)
 library(kableExtra)
 library(janitor)
 library(dplyr)
+library(stringr)
 # do you need more packages?
 ```
 
@@ -146,18 +147,11 @@ summary_mycal <- mycal %>%
   ) %>%
   rename(
     Activity = activity, Location = description, Duration = duration_hours
-  ) %>%
-  filter(
-    Activity %in% c("job", "math211homework", "physics124homework", "cosc112homework","stat231homework")
-  )
+  ) 
+
+summary_mycal$Duration = round(summary_mycal$Duration, 3)
 
 kable(summary_mycal)
-
-ggplot(summary_mycal, aes(x = Activity, y = Duration)) +
-  geom_boxplot(fill = "grey", color = "black") +
-  theme_minimal() +
-  coord_flip() +
-  labs(x = "Activity", y = "Duration (hours)", title = "Distribution of Duration for Each Activity")
 
 
 ```
@@ -179,6 +173,23 @@ Describe what information is conveyed through your first data visualization (tha
 -->
 ```
 ```{r}
+
+homeActivities_plot <- summary_mycal %>%
+  filter(
+    Activity %in% c("job", "math211homework", "physics124homework", "cosc112homework","stat231homework")
+  ) %>%
+  
+  na.omit()
+
+
+ggplot(homeActivities_plot, aes(x = Activity, y = Duration)) +
+  geom_boxplot(fill = "white", color = "grey") +
+  theme_dark() +
+  coord_flip() +
+  labs(x = "Activity", y = "Duration (hours)", title = "Distribution of Duration for Each Activity") +
+  facet_grid(~Location)
+
+
 # Code for first data visualization
 # Be sure to provide meaningful title and axes labels and
 # resize figure appropriately
@@ -192,6 +203,28 @@ Describe what information is conveyed through your second data visualization (th
 -->
 ```
 ```{r}
+
+barChart <- summary_mycal %>%
+  mutate(Activity = case_when(str_detect(Activity, "physics") ~ "Physics",
+                              str_detect(Activity, "math") ~ "Math",
+                              str_detect(Activity, "cosc") ~ "Computer Science",
+                              str_detect(Activity, "sleep") ~ "Sleep",
+                              str_detect(Activity, "job") ~ "Job",
+                              str_detect(Activity, "stat") ~ "Statistics",
+                              TRUE ~ "Other"))
+
+summary_barChart <- barChart %>%
+  group_by(Activity) %>%
+  
+  summarize(
+    Total_Time = sum(Duration)
+  )
+
+kable(summary_barChart)
+
+ggplot(summary_barChart, aes(x = Activity, y = Total_Time)) + geom_bar(stat = "identity", fill = "white") +
+  labs(x = "Activity", y = "Total Duration (hours)", title = "Total Time Spent on Each Activity") + theme_dark()
+
 # Code for second data visualization
 # Be sure to provide meaningful title and axes labels and
 # resize figure appropriately
