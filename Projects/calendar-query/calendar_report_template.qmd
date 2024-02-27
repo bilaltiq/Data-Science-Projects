@@ -32,6 +32,7 @@ library(lubridate)
 library(ical)
 library(kableExtra)
 library(janitor)
+library(dplyr)
 # do you need more packages?
 ```
 
@@ -65,6 +66,11 @@ Describe the questions of interest: what are they and why are they important or 
 ```
 # Data collection
 
+For the duration of the two weeks, I made sure to record the duration of my "work" and sleep at the end of each day. In particular, my work was subdivided into 3 categorical variables: courses, homework, and my job. The variables for courses and homework were further subdivided into 4 categorical variables i.e which course was the work being done for. (For instance, Physics124 Coursework and Stat231 Homework). All these categorical variables intended to record two things:
+
+1.  Location Data (where did this event take place?)
+2.  Interval Duration (how long did this event last?)
+
 ```{=html}
 <!--
 Briefly describe your data collection process, including how you defined variables of interest (include the levels/categories of categorical variables and the units for quantitative variables).
@@ -84,7 +90,7 @@ NOTE: All of your wrangling should be in this file - preferably well-organized a
 #| eval: false #be sure to set this to true and/or just remove
  
 # Data import (requires **ical** package)
-cal_import <- ical_parse_df("data/sample-gcal.ics") 
+cal_import <- ical_parse_df("stat231tracking.ics") 
 
 # Data wrangling
 mycal <- 
@@ -124,6 +130,8 @@ mycal <-
   ) %>% 
   # The first Google Calendar entry is always an empty 1969 event
   filter(year != 1969)
+
+kable(mycal)
 ```
 
 ```{=html}
@@ -132,6 +140,25 @@ Briefly describe and justify your plans for analysis (i.e., visualizations and s
 -->
 ```
 ```{r}
+summary_mycal <- mycal %>%
+  select(
+    activity, description, duration_hours
+  ) %>%
+  rename(
+    Activity = activity, Location = description, Duration = duration_hours
+  ) %>%
+  filter(
+    Activity %in% c("job", "math211homework", "physics124homework", "cosc112homework","stat231homework")
+  )
+
+kable(summary_mycal)
+
+ggplot(summary_mycal, aes(x = Activity, y = Duration)) +
+  geom_boxplot(fill = "grey", color = "black") +
+  theme_minimal() +
+  coord_flip() +
+  labs(x = "Activity", y = "Duration (hours)", title = "Distribution of Duration for Each Activity")
+
 
 ```
 
