@@ -88,14 +88,13 @@ NOTE: All of your wrangling should be in this file - preferably well-organized a
 ```
 ```{r}
 #| label: gcal-starter-code
-#| eval: false #be sure to set this to true and/or just remove
- 
+#| eval: true #be sure to set this to true and/or just remove
+
 # Data import (requires **ical** package)
 cal_import <- ical_parse_df("stat231tracking.ics") 
 
 # Data wrangling
-mycal <- 
-  cal_import %>% 
+mycal <- cal_import %>% 
   # Google Calendar event names are in a variable called "summary";
   # "activity" is a more relevant/informative variable name.
   rename(activity = summary) %>% 
@@ -133,7 +132,16 @@ mycal <-
   filter(year != 1969)
 
 kable(mycal)
+
 ```
+
+To analyse my data, I focused on 3 key aspects of the ICS file:
+
+1.  The time interval that has been calculated using the code above
+2.  The location data
+3.  The activity name
+
+For my first visualization, I decided to make a box plot to encapsulate the median duration of work that was spent on assignments for each class and job. This demonstrates how my time awake was spent outside of class on my work. For the second visualization, I made a bar graph showing the cumulative time spent on each of my courses, my job and sleep. As for the table,
 
 ```{=html}
 <!--
@@ -141,18 +149,44 @@ Briefly describe and justify your plans for analysis (i.e., visualizations and s
 -->
 ```
 ```{r}
-summary_mycal <- mycal %>%
-  select(
-    activity, description, duration_hours
-  ) %>%
+wrangled_mycal <- mycal %>%
+  select(activity, description, duration_hours) %>%
   rename(
-    Activity = activity, Location = description, Duration = duration_hours
+    Activity = activity, Location = description, Duration = duration_hours) 
+
+wrangled_mycal$Duration = round(wrangled_mycal$Duration, 3)
+
+kable(wrangled_mycal)
+
+homeActivities_plot <- wrangled_mycal %>%
+  filter(
+    Activity %in% c("job", "math211homework", "physics124homework", "cosc112homework","stat231homework")
+  ) %>%
+  
+  na.omit() 
+
+#Making sure to omit any entries where there was no coursework / data was incomplete or missing 
+
+
+barChart <- wrangled_mycal %>%
+  mutate(Activity = case_when(str_detect(Activity, "physics") ~ "Physics",
+                              str_detect(Activity, "math") ~ "Math",
+                              str_detect(Activity, "cosc") ~ "Comp Science",
+                              str_detect(Activity, "sleep") ~ "Sleep",
+                              str_detect(Activity, "job") ~ "Job",
+                              str_detect(Activity, "stat") ~ "Statistics",
+                              TRUE ~ "Other"))
+
+#What we want is a barchart that merges both my coursework and homework into the same activity, so I used the function 'st_detect' followed by the primary keyword which changed the names of those entries in Activities to be the same. This would then allow me to group by each course when manipulating the data. 
+
+barChart_summarized <- barChart %>%
+  group_by(Activity) %>% 
+  
+  #Here we're grouping by activity so that we can get the cumulative amount of time   spent on each of the activites.
+  
+  summarize(
+    Total_Time = sum(Duration) #Summation of the duration of all the activites
   ) 
-
-summary_mycal$Duration = round(summary_mycal$Duration, 3)
-
-kable(summary_mycal)
-
 
 ```
 
@@ -167,6 +201,10 @@ Each visualization and table should have its own code chunk.
 Before each code chunk, describe what information is conveyed through the corresponding visualization or table in connection with the questions you posed (e.g., "The first figure captures how the time I spent on each class varied over the two-week period. It appears I spent the most time on..."). 
 -->
 ```
+So what does my day look like when I'm not in class?
+
+Below (Fig 1.0) are box plots for each of the activities (excluding coursework and sleep) that were carried out throughout the two weeks. The activities are shown categorically on the y-axis and the duration (in hours) is shown as a quantitative variable on the x-axis. Each box plot describes 3 key things: the median duration for the activity, the interquartile range and the minimum and maximum duration of time that has been spent on the activity.
+
 ```{=html}
 <!--
 Describe what information is conveyed through your first data visualization (that you'll create below).
@@ -174,28 +212,19 @@ Describe what information is conveyed through your first data visualization (tha
 ```
 ```{r}
 
-homeActivities_plot <- summary_mycal %>%
-  filter(
-    Activity %in% c("job", "math211homework", "physics124homework", "cosc112homework","stat231homework")
-  ) %>%
-  
-  na.omit()
-
-
 ggplot(homeActivities_plot, aes(x = Activity, y = Duration)) +
-  geom_boxplot(fill = "white", color = "grey") +
-  theme_dark() +
+  geom_boxplot(fill = "white", color = "black") +
+  theme_minimal() +
   coord_flip() +
-  labs(x = "Activity", y = "Duration (hours)", title = "Distribution of Duration for Each Activity") +
-  facet_grid(~Location)
+  labs(x = "Activity", y = "Duration (hours)", 
+      title = "Distribution of Duration for Each Activity") +
+      facet_grid(~Location)
 
-
-# Code for first data visualization
-# Be sure to provide meaningful title and axes labels and
-# resize figure appropriately
-# Only code for your first visualization should be here (no or very minimal wrangling code)
-# Remove all these comments!
 ```
+
+*Fig 1.0*
+
+Although it was interesting to see how my activities outside of class varied in their duration, I was curious to know *exactly* what my time distribution was including all my activities over the course of the past 2 weeks. This visualization is shown in the bar chart below, where on the x - axis we have the categorical data (the activities that time was spent on) and on the y - axis we have the total duration of time spent on each activity.
 
 ```{=html}
 <!--
@@ -204,33 +233,12 @@ Describe what information is conveyed through your second data visualization (th
 ```
 ```{r}
 
-barChart <- summary_mycal %>%
-  mutate(Activity = case_when(str_detect(Activity, "physics") ~ "Physics",
-                              str_detect(Activity, "math") ~ "Math",
-                              str_detect(Activity, "cosc") ~ "Computer Science",
-                              str_detect(Activity, "sleep") ~ "Sleep",
-                              str_detect(Activity, "job") ~ "Job",
-                              str_detect(Activity, "stat") ~ "Statistics",
-                              TRUE ~ "Other"))
-
-summary_barChart <- barChart %>%
-  group_by(Activity) %>%
-  
-  summarize(
-    Total_Time = sum(Duration)
-  )
-
-kable(summary_barChart)
-
-ggplot(summary_barChart, aes(x = Activity, y = Total_Time)) + geom_bar(stat = "identity", fill = "white") +
+ggplot(barChart_summarized, aes(x = Activity, y = Total_Time)) + geom_bar(stat = "identity", fill = "white") +
   labs(x = "Activity", y = "Total Duration (hours)", title = "Total Time Spent on Each Activity") + theme_dark()
 
-# Code for second data visualization
-# Be sure to provide meaningful title and axes labels and
-# resize figure appropriately
-# Only code for your second visualization should be here (no or very minimal wrangling code)
-# Remove all these comments!
 ```
+
+*Fig 1.1*
 
 ```{=html}
 <!--
@@ -238,6 +246,49 @@ Describe what information is conveyed through the table (that you'll create) bel
 -->
 ```
 ```{r}
+
+wrangled_table_mycal <- mycal %>%
+  select(
+    activity, duration_hours, weekday_number
+  ) %>%
+  rename(
+    Activity = activity, Duration = duration_hours, 
+    Weekday = weekday_number) %>%
+    mutate(Activity = case_when(str_detect(Activity, "physics") ~ "Physics",
+                              str_detect(Activity, "math") ~ "Math",
+                              str_detect(Activity, "cosc") ~ "Comp Science",
+                              str_detect(Activity, "sleep") ~ "Sleep",
+                              str_detect(Activity, "job") ~ "Job",
+                              str_detect(Activity, "stat") ~ "Statistics",
+                              TRUE ~ "Other")) %>%
+    filter(Activity %in% c("Job", "Physics", "Math", "Comp Science"
+                          ,"Statistics"))
+
+wrangled_table_mycal$Duration = round(wrangled_table_mycal$Duration, 3)
+
+summary_table_mycal <- wrangled_table_mycal %>%
+  group_by(Activity, Weekday) %>%
+  summarize(
+  Mean_Time = mean(Duration)
+  ) %>%
+  arrange(Weekday) %>%
+  mutate(Weekday = case_when(str_detect(Weekday, "1") ~ "Monday",
+                             str_detect(Weekday, "2") ~ "Tuesday",
+                             str_detect(Weekday, "3") ~ "Wednesday",
+                             str_detect(Weekday, "4") ~ "Thursday",
+                             str_detect(Weekday, "5") ~ "Friday",
+                             str_detect(Weekday, "6") ~ "Saturday",
+                             str_detect(Weekday, "7") ~ "Sunday"))
+ 
+
+pivoted_summary <- summary_table_mycal %>%
+  pivot_wider(
+    names_from = Weekday,
+    values_from = Mean_Time
+  ) 
+
+kable(pivoted_summary, booktabs = TRUE)
+
 # Code for table
 # Only code for your table should be here (no or very minimal wrangling code)
 ```
@@ -266,3 +317,18 @@ Write your reflection here in paragraph form. In particular, address...
 You may address these questions in any particular order. If it helps, you can make a subsection for each. 
 -->
 ```
+Throughout this project, there were many considerations that I had to make that ranged from the data collection itself to the analysis and presentation. Each step of the way allowed me to grow as a data scientist, and in this reflection I aim to break down the various aspects of these steps.
+
+*Difficulties in Data Collection & Future Projects*
+
+Let's start off by stating the obvious: data collection is a **difficult** process. Mainly, it was the problem of making sure that my data was accurate and in line with what the goals of my questions were. My first hurdle was ensuring that I was able to track my time precisely on the calendar - this was difficult to do as often times I would find myself having gone through half the day and remembering that I hadn't tracked my day yet. Luckily, I had solutions to this: I tracked my sleep regularly on my Apple Watch which gave me an accurate representation of sleep as I would not be in a state of mind to note it down when I woke up and secondly, I had a calendar of my courses and time tracking for my job so I could determine where I spent those hours. Unfortunately, my homework time tracking was still somewhat inaccurate due to the forgetfulness of human nature and human error. My second issue with my data tracking cycle was about a couple days in I realized that I had only tracked my time in activities outside of my classes as "work". This was not helpful to me, as I wanted to know how my work outside my classes was split over the day, and so I had to revisit my data analysis cycle and add to my tracking on how much time I spent on specific homework.
+
+If I were to repeat this project, I would focus on making sure that I had a more formalized and rigorous proposal. Although I did do it this time around, for next time I would explicitly define my variables into categorical and quantitative variables and plot dummy visualizations so I could predict the difficulties in the analysis part (i.e wrangling and coding). Sometimes, we need data in the analysis that we didn't realize was relevant in the original proposal, and so going through the process initially would help crystallize a pathway moving forward.
+
+*Was the data enough?*
+
+After I had plotted my table and visualizations, I came to a stark realization: my dataset wasn't expansive enough. There could have been biases in my data, as these past few weeks have been leading up to midterms it would mean I would have been studying more and sleeping less. It only captures a small segment of how my school semester is spent, and to accurately see the distribution of my time I would have to collect data over the period of the entire semester. This isn't to say my data didn't satisfactorily answer my questions, rather there are more questions that arise from the data I've already collected. I believe collecting data over the period of a semester would not be too difficult if one makes it a routine, and it is definitely plausible as it's simply time tracking.
+
+*Providing Data & Ethical Responsibilites*
+
+Data is our modern currency, and so just like a transaction with anyone, I have expectations from that entity. By giving out my data, my most important expectation would be for it to only be used for the activity that I have consented to, for example google maps only using my location for the sole purpose of improving its maps features. If however, they sell my data to other companies so they can use it for targeted ads, it would nullify the contract and my expectations.
