@@ -154,6 +154,8 @@ big_cities <- world_cities %>%
 set.seed(15)
 city_kmeans_results <- big_cities %>% 
   kmeans(centers = 6, nstart = 30) 
+
+glimpse(city_kmeans_results)
 ```
 
 > part b - The code below reports on the class of the `city_kmeans_results` and the named elements we can refer to and select from that class. What type of object is `city_kmeans_results`? What named elements does the object contain and what information does each element give us?
@@ -168,7 +170,7 @@ class(city_kmeans_results)
 names(city_kmeans_results)
 ```
 
-Solution:
+Solution: It has a class of type kmeans and the values of the objects contain information of the character vector which is up to or around the same length. The named elements contained by the object are in the second line.
 
 > part c - Where are the estimated centroids of the 6 clusters? How many cities were assigned to the first cluster? Which cluster contains the most cities?
 
@@ -180,7 +182,7 @@ city_kmeans_results$centers
 city_kmeans_results$size
 ```
 
-Solution:
+Solution: The estimated centroids of the 6 clusters are given above with the longitude and latitude coordinates. The cluster that contains the most cities seems to cluster 6 as it has 988 data points.
 
 > part d - Run the code below to create a plot of the assigned clusters. What do you think Cluster 2 represents?
 
@@ -204,14 +206,49 @@ ggplot(big_cities, aes(x = longitude, y = latitude)) +
   theme(legend.position = "none")
 ```
 
-Solution:
+Solution: Cluster 2 represents the major cities centered or around North America.
 
 > part e - In $k$-means clustering, the analyst specifies the number of clusters to create. Reproduce the k-means analysis above but update the `center` argument within the `kmeans()` function to identify 3 clusters instead of 6. (Show the code for this - copy/paste/edit as needed.) Then, create a plot like the one above, but coloring the points by these new cluster assignments. How many cities are in Cluster 1 now? What does Cluster 2 represent now?
 
-Solution:
+Solution: There are 1589 cities in cluster one. Cluster 2 seems to now represent the continents of north america and south america.
 
 ```{r}
 # be sure to set a seed for reproducibility before k-means runs
+
+# Identify the 4,000 biggest cities in the world
+big_cities <- world_cities %>%
+  arrange(desc(population)) %>%
+  head(4000) %>%
+  select(longitude, latitude)
+
+# Make sure to set seed for reproducibility!
+set.seed(12)
+city_kmeans_results <- big_cities %>% 
+  kmeans(centers = 3, nstart = 30) 
+
+# Centroids
+city_kmeans_results$centers
+
+# Cluster sizes
+city_kmeans_results$size
+
+# Join cluster assignments with original dataset
+big_cities <- big_cities %>% 
+  add_column(cluster = factor(city_kmeans_results$cluster))
+
+# Make dataframe out of estimated cluster centroids
+city_cluster_centers <- city_kmeans_results$centers %>%
+  data.frame() %>% 
+  add_column(cluster_number = 1:3)
+
+# Plot cluster assignments and centroids
+ggplot(big_cities, aes(x = longitude, y = latitude)) +
+  geom_point(aes(color = cluster), alpha = 0.6)  + 
+  scale_color_brewer(palette = "Spectral") +
+  geom_label(data = city_cluster_centers, 
+             aes(label = cluster_number), 
+             size = 3) + 
+  theme(legend.position = "none")
 ```
 
 ```{=html}
