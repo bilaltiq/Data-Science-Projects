@@ -78,7 +78,7 @@ length(str_detect(macbeth, "  MACBETH"))
 str_detect(macbeth, "  MACBETH") %>% head()
 ```
 
-Solution:
+Solution: Str_subset returns the values or strings in this case where Macbeth is found. The first result returns the total results. As for str_which, it firstly returns the total results in the dataset. Then it returns the indices of where the search result was found. Finally, str_detect returns a logical vector in which the string was found. So it will always have the same length as the dataset.
 
 ```{=html}
 <!--
@@ -93,7 +93,7 @@ str_subset(macbeth, "MACBETH\\.") %>% head()
 str_subset(macbeth, "MACBETH.") %>% head()
 ```
 
-Solution:
+Solution: The period is known as a Mechanator. To search for the literal term of the period we need to use a double backslash.
 
 > part c - The three commands below look similar, but return different results. In words, explain what overall pattern is being searched for in each of the three cases (i.e., what do the patterns `MAC[B-Z]`, `MAC[B|Z]`, and `^MAC[B-Z]` indicate?)?
 
@@ -105,7 +105,7 @@ str_subset(macbeth,"MAC[B|Z]") %>% head()
 str_subset(macbeth, "^MAC[B-Z]") %>% head()
 ```
 
-Solution:
+Solution: The first asks to search MAC followed by any character that may start from B till Z. The second does something similar, but it only allows for B OR Z. The third one uses a carrot to represent an anchor of the pattern to the beginning of the text.
 
 > Optional - Explore these other patterns to figure out what they do.
 
