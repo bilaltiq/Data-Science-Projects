@@ -1,6 +1,6 @@
 ---
 title: "Practice5S24"
-author: "YourNameGoesHere"
+author: "BilalTariq"
 date: today
 format: pdf
 editor: visual
@@ -14,6 +14,7 @@ library(mosaic)
 library(tidyverse)
 library(mdsr)
 library(Lahman)
+library(kableExtra)
 # add other packages here!
 
 
@@ -23,13 +24,13 @@ library(Lahman)
 
 Reminder: Practice assignments may be completed working with other individuals.
 
-# Reading 
+# Reading
 
 The associated reading for the week is Chapter 19 and Section 12.1.
 
 # Practicing Academic Integrity
 
-If you worked with others or used resources outside of provided course material (anything besides our textbook, course materials in the repo, labs, R help menu) to complete this assignment, please acknowledge them below using a bulleted list. 
+If you worked with others or used resources outside of provided course material (anything besides our textbook, course materials in the repo, labs, R help menu) to complete this assignment, please acknowledge them below using a bulleted list.
 
 <!-- ~~~~~~~~~~~~~~~~ YOU MAY BEGIN EDITING BELOW THIS LINE ~~~~~~~~~~~~~~~~ -->
 
@@ -37,25 +38,21 @@ If you worked with others or used resources outside of provided course material 
 
 Name(s) and corresponding problem(s)
 
-*
+-   N/A
 
 *I used the following sources to help complete this assignment:*
 
 Source(s) and corresponding problem(s)
 
-* 
-
-
+-   
 
 \newpage
-
 
 <!-- PROBLEM 1 ---------------------------------------------------------------->
 
 # 1 - MDSR 12.6 (modified)
 
-"Baseball players are voted into the Hall of Fame by the members of the Baseball Writers of America Association.  Quantitative criteria are used by the voters, but they are also allowed wide discretion.  The following code identifies the position players (not pitchers) who have been elected to the Hall of Fame and tabulates a few basic statistics, include their number of career hits (`tH`), home runs (`tHR`), runs batted in (`tRBI`), and stolen bases (`tSB`)." Only players with more than 1000 total hits are included as a way to obtain the position players only (not pitchers). 
-
+"Baseball players are voted into the Hall of Fame by the members of the Baseball Writers of America Association. Quantitative criteria are used by the voters, but they are also allowed wide discretion. The following code identifies the position players (not pitchers) who have been elected to the Hall of Fame and tabulates a few basic statistics, include their number of career hits (`tH`), home runs (`tHR`), runs batted in (`tRBI`), and stolen bases (`tSB`)." Only players with more than 1000 total hits are included as a way to obtain the position players only (not pitchers).
 
 ```{r}
 #| message: false
@@ -66,32 +63,44 @@ hof <- Batting %>%
   filter(inducted == "Y" & votedBy == "BBWAA") %>%
   summarize(tH = sum(H), tHR = sum(HR), tRBI = sum(RBI), tSB = sum(SB)) %>%
   filter(tH > 1000)
+
+kable(hof)
+
 ```
 
+-   Use the `kmeans()` function to perform a cluster analysis on these players.
+-   Explain your choice of $k$, the number of clusters.
+-   Describe the properties that seem common to each cluster in your solution.
+-   Include at least one visual that helps explore the clusters found.
+-   Your solution should include some discussion of whether or not you chose to scale the variables and why. (You should determine whether or not you need to scale before clustering.)
+-   Remember that your solution must be reproducible. (Hint: this means you need to do something in your code.)
 
-* Use the `kmeans()` function to perform a cluster analysis on these players.
-* Explain your choice of $k$, the number of clusters. 
-* Describe the properties that seem common to each cluster in your solution.
-* Include at least one visual that helps explore the clusters found. 
-* Your solution should include some discussion of whether or not you chose to scale the variables and why. (You should determine whether or not you need to scale before clustering.) 
-* Remember that your solution must be reproducible. (Hint: this means you need to do something in your code.)
-
-
-Solution: 
-
+Solution:
 
 ```{r}
 
+set.seed(100)
+clustering_prep_hof <- hof %>% 
+  select("tH","tHR", "tRBI", "tSB") %>%
+  mutate(across(tH:tSB, ~ as.numeric(.)), across(where(is.numeric), ~ scale(.)[,1], .names = "{.col}_scaled")) %>%
+  drop_na()
+
+glimpse(clustering_prep_hof)
+
+set.seed(231)
+
+clustering_hof <- hof %>%
+  select(ends_with("scaled")) %>%
+  kmeans(centers = 3, nstart = 20)
+
+  
+  
+
+
+
 ```
 
-
-
-
-
-
-
 <!-- Have you committed and/or pushed yet? -->
-
 
 \newpage
 
@@ -99,10 +108,9 @@ Solution:
 
 # 2 - Trump Tweets
 
-David Robinson, Chief Data Scientist at DataCamp, wrote a blog post ["Text analysis of Trump's tweets confirms he writes only the (angrier) Android half"](http://varianceexplained.org/r/trump-tweets/).
-He provides a dataset with over 1,500 tweets from the account realDonaldTrump between 12/14/2015 and 8/8/2016.  We'll use this dataset to explore the tweeting behavior of @realDonaldTrump during this time period.
+David Robinson, Chief Data Scientist at DataCamp, wrote a blog post ["Text analysis of Trump's tweets confirms he writes only the (angrier) Android half"](http://varianceexplained.org/r/trump-tweets/). He provides a dataset with over 1,500 tweets from the account realDonaldTrump between 12/14/2015 and 8/8/2016. We'll use this dataset to explore the tweeting behavior of @realDonaldTrump during this time period.
 
-First, read in the file. Note that there is a `TwitteR` package which provides an interface to the Twitter web API.  We'll use this R dataset David Robinson created using that package so that you don't have to set up Twitter authentication.  
+First, read in the file. Note that there is a `TwitteR` package which provides an interface to the Twitter web API. We'll use this R dataset David Robinson created using that package so that you don't have to set up Twitter authentication.
 
 ```{r}
 # the .rda file is also provided if this website ever breaks
@@ -117,9 +125,9 @@ Solution:
 
 ```
 
-> part b - Using the `statusSource` variable, compute the number of tweets from each source.  How many different sources are there?  How often are each used?
+> part b - Using the `statusSource` variable, compute the number of tweets from each source. How many different sources are there? How often are each used?
 
-Hint: You could answer the questions with a nice table printed to the screen. 
+Hint: You could answer the questions with a nice table printed to the screen.
 
 Solution:
 
@@ -127,8 +135,7 @@ Solution:
 
 ```
 
-> part c - We're going to compare the language used between the Android and iPhone sources, so we only want to keep tweets coming from those sources.  Explain what the `extract()` function (from the **tidyverse** package) is doing below.  Include in your own words what each argument is doing. 
-
+> part c - We're going to compare the language used between the Android and iPhone sources, so we only want to keep tweets coming from those sources. Explain what the `extract()` function (from the **tidyverse** package) is doing below. Include in your own words what each argument is doing.
 
 ```{r}
 #| eval: false # remove eval: false when working on this!
@@ -140,14 +147,13 @@ tweets <- tweets %>%
   filter(source %in% c("Android", "iPhone"))
 ```
 
-Solution: 
-
-> part d - How does the language of the tweets differ by source?  Create a word cloud for the top 50 words used in tweets sent from the Android.  Create a second word cloud for the top 50 words used in tweets sent from the iPhone.  How do these word clouds compare?  (Are there some common words frequently used from both sources? Are the most common words different between the sources?)
-
-Note: Don't forget to remove stop words before creating the word cloud.  Also remove the terms "https" and "t.co".
-
 Solution:
 
+> part d - How does the language of the tweets differ by source? Create a word cloud for the top 50 words used in tweets sent from the Android. Create a second word cloud for the top 50 words used in tweets sent from the iPhone. How do these word clouds compare? (Are there some common words frequently used from both sources? Are the most common words different between the sources?)
+
+Note: Don't forget to remove stop words before creating the word cloud. Also remove the terms "https" and "t.co".
+
+Solution:
 
 ```{r}
 #| fig-width: 8
@@ -155,24 +161,20 @@ Solution:
 
 ```
 
-
-> part e - Consider the sentiment.  Compute the proportion of words among the tweets within each source classified as "angry" and the proportion of words classified as "joy"  based on the NRC lexicon.  How does the proportion of "angry" and "joy" words compare between the two sources?  What about "positive" and "negative" words?  
+> part e - Consider the sentiment. Compute the proportion of words among the tweets within each source classified as "angry" and the proportion of words classified as "joy" based on the NRC lexicon. How does the proportion of "angry" and "joy" words compare between the two sources? What about "positive" and "negative" words?
 
 Solution:
-
 
 ```{r}
 
 ```
 
-> part f - Lastly, based on your responses above, do you think there is evidence to support Robinson's claim that Trump only writes the Android half of the tweets from realDonaldTrump?  In 2-4 sentences, please explain.
+> part f - Lastly, based on your responses above, do you think there is evidence to support Robinson's claim that Trump only writes the Android half of the tweets from realDonaldTrump? In 2-4 sentences, please explain.
 
 Solution:
 
-
-
-
+```{=html}
 <!--
 Knit, commit, and push, including the final renamed pdf, to your repo. Then, upload the .pdf to Gradescope before the deadline. 
 -->
-
+```
