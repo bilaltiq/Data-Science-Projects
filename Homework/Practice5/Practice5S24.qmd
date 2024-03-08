@@ -15,6 +15,7 @@ library(tidyverse)
 library(mdsr)
 library(Lahman)
 library(kableExtra)
+library(ggplot2)
 # add other packages here!
 
 
@@ -81,17 +82,32 @@ Solution:
 
 set.seed(100)
 clustering_prep_hof <- hof %>% 
-  select("tH","tHR", "tRBI", "tSB") %>%
-  mutate(across(tH:tSB, ~ as.numeric(.)), across(where(is.numeric), ~ scale(.)[,1], .names = "{.col}_scaled")) %>%
+  select("tH","tHR") %>%
   drop_na()
 
 glimpse(clustering_prep_hof)
 
 set.seed(231)
 
-clustering_hof <- hof %>%
-  select(ends_with("scaled")) %>%
-  kmeans(centers = 3, nstart = 20)
+clustering_hof <- clustering_prep_hof %>%
+  select("tH", "tHR") %>%
+  kmeans(centers = 2, nstart = 20)
+
+clustering_hof$cluster
+clustering_hof$centers
+
+hof <- hof %>%
+  mutate(clusters2 = factor(clustering_hof$cluster))
+
+ggplot(data = hof, aes(x = tH, y = tHR)) +
+geom_point(aes(color = clusters2)) +
+coord_fixed() +
+geom_point(data = data.frame(clustering_hof$centers),
+aes(x = tH, y = tHR),
+pch = "x", size = 8) +
+labs(x = "Number of Career Hits",
+y = "Number of Home Runs",
+color = "Cluster assignment") + theme_minimal()
 
   
   
