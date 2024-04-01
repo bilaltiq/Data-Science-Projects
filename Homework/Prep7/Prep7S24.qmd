@@ -15,6 +15,10 @@ library(kableExtra)
 library(igraph) # may need to install once; networks
 library(igraphdata) # may need to install once; networks
 library(ggplot2)
+library(sf)
+library(ggspatial)
+library(leaflet)
+
 
 # add other packages here for the spatial work
 
@@ -130,6 +134,9 @@ Solution:
 
 ```{r}
 
+df <- karatedata$kdegree
+
+
 ```
 
 > part b - Identify the individuals with the top 5 highest degree values. Do they include "John A" and "Mr Hi"?
@@ -185,19 +192,19 @@ Chapter 17 introduces a number of spatial data specific terms.
 
 > part a - What are two examples of spatial data structure formats?
 
-Solution:
+Solution: Shapefile and KML
 
 > part b - What does `EPSG` stand for in `EPSG codes`? Why is it important to know the `EPSG` number, if applicable for your map?
 
-Solution:
+Solution: It stands for Eurpoean Petroleum Survey group and it's important to know them as they can be used to identify coordinates in data so in our scenario, we can make a plot of the geospatial data.
 
 > part c - What is the primary package used in the textbook to work with spatial data?
 
-Solution:
+Solution: We will be working with the sf package.
 
 > part d - What term/concept did you find hardest to understand from the reading?
 
-Solution:
+Solution: I currently can't seem to understand the concept of layers such as the st_layers function.
 
 \newpage
 
@@ -247,7 +254,7 @@ ggplot(cholera_deaths) +
   geom_sf()
 ```
 
-Solution:
+Solution: Yes, we got exactly a map like displayed in fig 17.3
 
 ```{=html}
 <!--
@@ -264,7 +271,7 @@ ggplot(cholera_deaths) +
   geom_sf(aes(size = Count), alpha = 0.7)
 ```
 
-Solution:
+Solution: The dots representing the deaths are off by hundreds of metres.
 
 > part c - Set the coordinates from the cholera data as the `espg:27700` coordinate system using `st_set_crs()`, then transform them to the `espg:4326` system using `st_transform()`, and finally plot the new, correctly projected data. What does "crs" stand for in this code?
 
@@ -278,7 +285,7 @@ ggplot(cholera_latlong) +
   geom_sf(aes(size = Count), alpha = 0.7)
 ```
 
-Solution:
+Solution: It stands or coordinate reference system.
 
 > part d - Repeat the layer loading and coordinate transformation procedure to add the water pumps to the plot. Looking at your plot, do you agree that the water pump on Broad Street seems to have been the problem for this outbreak?
 
@@ -293,7 +300,7 @@ ggplot(cholera_latlong) +
   geom_sf(data = pumps_latlong, size = 3, color = "red")
 ```
 
-Solution:
+Solution: Yes, it seems as though the water pump on broad street was indeed the cause of the cholera outbreak as it has a high centrality and is in the middle of the region where the cholera cases were recorded.
 
 > part e - Finally, try out the code below to create a dynamic map using the **leaflet** package (install and load as before!). Zoom in and out of the map to confirm that (1) there is a death in the middle of Hopkins Street, and (2) there is a pump near the intersection of Broadwick Street and Lexington Street. What seem to be the main types of businesses along the modern day Kingly street (look left of the pump)?
 
@@ -320,7 +327,7 @@ leaflet() %>%
                    fillOpacity = 0.7)
 ```
 
-Solution:
+Solution: There seems to be a lot of clothing brands, a shoe shop, and a lot of food brands on Kingly street.
 
 ```{=html}
 <!--
