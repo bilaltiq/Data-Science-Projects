@@ -1,70 +1,56 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 
-# Define UI for app that draws a histogram ----
+#Define UI ---
+
 ui <- fluidPage(
+  titlePanel(strong("My Shiny App")),
   
-  # App title ----
-  titlePanel("Hello World!"),
-  
-  # Sidebar layout with input and output definitions ----
   sidebarLayout(
-    
-    # Sidebar panel for inputs ----
-    sidebarPanel(
+    position = "left",
+    sidebarPanel(span("Crete demographic maps with information from the
+                      2010 US Census.", style = "color:gray", align = "right"),
+                 br(),
+                 strong("Choose a variable to display"),
+                 selectInput("select", h3("Select box"),
+                             choices = list("Percent White" = 1,
+                                            "Percent Black" = 2,
+                                            "Percent Hispanic" = 3,
+                                            "Percent Asian" = 4)),
+                 sliderInput("mySlider", h3("Range of Interest"),
+                             min = 0, max = 100, value = c(0,100))
+                 
+                 
+                 
       
-      # Input: Slider for the number of bins ----
-      sliderInput(inputId = "bins",
-                  label = "Number of bins:",
-                  min = 5,
-                  max = 50,
-                  value = 30)
+      
       
     ),
-    
-    # Main panel for displaying outputs ----
     mainPanel(
-      
-      # Output: Histogram ----
-      plotOutput(outputId = "distPlot")
-      
-    )
+              textOutput("selected_var"),
+              textOutput("byrh")
+              )
   )
+  
+  
+  
 )
 
-# Define server logic required to draw a histogram ----
-server <- function(input, output) {
+#Define server logic --- 
+
+server <- function(input, output){
   
-  # Histogram of the Old Faithful Geyser Data ----
-  # with requested number of bins
-  # This expression that generates a histogram is wrapped in a call
-  # to renderPlot to indicate that:
-  #
-  # 1. It is "reactive" and therefore should be automatically
-  #    re-executed when inputs (input$bins) change
-  # 2. Its output type is a plot
+  output$selected_var <- renderText({
+    paste("You have selected this", input$select)
+  })
   
-  output$distPlot <- renderPlot({
-    
-    x    <- faithful$waiting
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    
-    hist(x, breaks = bins, col = "#007bc2", border = "orange",
-         xlab = "Waiting time to next eruption (in mins)",
-         main = "Histogram of waiting times")
-    
+  output$byrh <- renderText({
+    paste("Your selected range is:", input$mySlider[1], "to",
+          input$mySlider[2])
   })
   
 }
 
-# Run the application 
+
+#Run the app ---
 shinyApp(ui = ui, server = server)
 
