@@ -125,7 +125,7 @@ violation_scores <- Violations %>%
   select(dba, score)
 ```
 
-Solution:
+Solution: The code just filters the data such that it returns a data frame of the scores made in the year 2015 which have a minimum value of 7 and a maximum value of 19.
 
 Hint: Being able to describe what the chunk above does in a sentence or two can help you as you work to describe the wrangling process for your final projects.
 
@@ -133,7 +133,7 @@ Hint: Being able to describe what the chunk above does in a sentence or two can 
 
 Be sure you understand what is being plotted!
 
-Solution:
+Solution:undefined
 
 ```{r}
 ggplot(data = violation_scores, aes(x = score)) + 
@@ -143,12 +143,13 @@ ggplot(data = violation_scores, aes(x = score)) +
   annotate(
     "text", x = 10, y = 15000, 
     label = "'A' grade: score of 13 or less"
-  )
+  ) + 
+  ylab("Number of Occurences")
 ```
 
 > part c - In this data set, a score of 13 or below was an "A" grade for the restaurant. Looking at the plot you generated, is there anything suspicious about the transition point?
 
-Solution:
+Solution: Yes, it seems as though there is a drastic falloff of the number of scores per score interval after the A grade.
 
 (This is the motivation for the simulation.)
 
@@ -169,7 +170,7 @@ random_flip <- 1:1000 %>%
 head(random_flip, 3)
 ```
 
-Solution:
+Solution: There were 3 simulations performed each of which had 1000 coin flips .
 
 > part e - To present the results of the simulation, the next plot was produced. Improve the plot by adding: a title, the observed value of restaurants with a score of 14 (add on to the existing label), and making a better y-axis label.
 
@@ -183,14 +184,14 @@ ggplot(data = random_flip, aes(x = heads)) +
     "text", x = 2155, y = 75, 
     label = "observed", hjust = "left"
   ) + 
-  labs(x = "Number of restaurants with scores of 14 (if equal probability)") 
+  labs(x = "Number of restaurants with scores of 14 (if equal probability)", y = "Number of Occurences") 
 ```
 
 > part f - What does the plot illustrate? In other words, what do we learn from the simulation? Be sure you can explain this based on the plot (don't just take the answer from the text).
 
 Hint: This is an example of a permutation test. Be sure you are clear on what hypothesis was being tested.
 
-Solution:
+Solution: We were trying to test whether there was an unequal distribution on the number of grades given out as our hypotheses. The plot illustrates that there is a huge divide between the number of expected restaurants being given a score on 14 based on chance (if we assume equal probability) then there is the actual amount of restaurants being given a score of 14. This could be due to bias in the reviewers etc., as it is incredibly unlikely that this would happen out of sheer circumstance.
 
 ```{=html}
 <!--
