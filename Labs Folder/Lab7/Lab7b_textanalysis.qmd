@@ -155,7 +155,7 @@ removed <- poems_words_all %>%
 
 > part c - Look at the removed dataset. What do you think? Are there any words that have been removed that you think might be meaningful to keep?
 
-Solution: yes there seem to be some words that would be meaningful to keep, such as "thanks". so we don't necessarily want all of the words removed.
+Solution:
 
 \newpage
 
@@ -190,18 +190,9 @@ poems_words |>
 
 > part b - Run the same code but using the `poems_words_all` dataset. What do you notice about this graphic, and what does this tell us about the utility of removing stop words before analysis?
 
-Solution: Removing words allows us to get rid of words that don't really convey much meaning or context; otherwise all we would be seeing is words like the, a, to, and.
+Solution:
 
 ```{r}
-
-poems_words_all %>%
-  count(word, sort = TRUE) %>%
-  slice(1:10) %>%
-  ggplot(aes(x = fct_reorder(word,n), y = n, color = word, fill = word)) + 
-  geom_col() +
-  coord_flip() +
-  guides(color = "none", fill = "none") +
-  labs(x = NULL, y = "Number of instances", title = "The most common words in Emily Dickinson's poems")
 
 ```
 
@@ -219,21 +210,6 @@ word_frequencies <- poems %>%
 > part c - **Your turn!** Create a simple plot of the 10 most common *bigrams* used by Emily Dickinson. *Hint: you need to remove stop words AFTER creating the dataset with one row per bigram. (Why?) Create one row per bigram using the `unnest_tokens` function; then, remove any row that has at least one stop word in it.*
 
 ```{r}
-
-bigram_frequencies <- poems %>%
-  unnest_tokens(output = bigram, input = text,
-                token = "ngrams", n = 2) 
-
-poems_bigram_clean <- bigram_frequencies %>%
-  separate(col = "bigram", into=c("word1","word2"), sep= " ", remove = FALSE) %>%
-  anti_join(stop_words, by=c("word1" = "word")) %>%
-  anti_join(stop_words, by=c("word2" = "word")) %>%
-  filter(!is.na(bigram)) %>%
-  count(bigram, sort = TRUE) %>%
-  slice(1:10)
-
-head(poems_bigram_clean) %>%
-  kable()
 
 
 ```
@@ -395,7 +371,7 @@ Solution:
 
 ```{r }
 # Type "Yes" to download if prompted
-afinn_lexicon <- get_sentiments("nrc")
+afinn_lexicon <- get_sentiments("afinn")
 ```
 
 > part b - Use the `get_sentiments()` function to create a dataframe `nrc_lexicon` that holds the NRC Word-Emotion Association lexicon (Mohammad 2010). What does each row in this dataset represent?
