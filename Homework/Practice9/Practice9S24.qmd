@@ -16,6 +16,7 @@ library(kableExtra)
 library(tidyverse)
 library(mdsr)
 library(RMySQL)
+library(ggplot2)
 
 # add other packages needed here!
 knitr::opts_chunk$set(
@@ -167,11 +168,46 @@ for(i in 1:1000){
 # target visualization: sampling distribution of \hat{beta}_1
 #                 (histogram or density plot of \beta_1 estimates), by model
 
-# target summary numbers: mean and sd/variance of beta_1 estimates, by model
+#Creating dataframes so we can use them in ggplot
+
+model1_dataframe <- data.frame(Beta1 = beta_model1)
+model2_dataframe <- data.frame(Beta1 = beta_model2)
+
+# target summary numbers: mean and sd/variance of beta_1 estimates, by model\
+
+model1_summaryCalculation <- c(mean(beta_model1), sd(beta_model1))
+model2_summaryCalculation <- c(mean(beta_model2), sd(beta_model2))
+
 
 # create target visualization
 
+model1_df <- data.frame(Beta1 = beta_model1, Model = "Model 1")
+model2_df <- data.frame(Beta1 = beta_model2, Model = "Model 2")
+df_modelsVIS <- rbind(model1_df, model2_df)
+
+ggplot(df_modelsVIS, aes(x=Beta1, color=Model)) +
+  geom_histogram() +
+  labs(title="Beta 1 Values Distribution", x="Beta 1", y="Frequency")
+
+
+
 # create target summaries
+
+model1_summarydf <- data.frame(
+  Model = "Model 1",
+  Mean = model1_summaryCalculation[1],
+  SD = model1_summaryCalculation[2]
+)
+
+model2_summarydf <- data.frame(
+  Model = "Model 2",
+  Mean = model2_summaryCalculation[1],
+  SD = model2_summaryCalculation[2]
+)
+
+summary_df <- rbind(model1_summarydf, model2_summarydf)
+
+print(summary_df)
 ```
 
 \newpage
