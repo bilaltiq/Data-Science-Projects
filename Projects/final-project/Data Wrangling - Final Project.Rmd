@@ -1,0 +1,60 @@
+---
+title: "Data Wrangling COVID Analysis"
+author: "Bilal Tariq"
+date: "2024-04-24"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(mosaic)
+library(Stat2Data)
+library(leaps)
+library(broom)
+library(rvest)
+library(methods)
+library(shiny)
+library(readxl)
+library(tidyverse)
+
+```
+
+
+
+COVID Cases Dataset:
+
+```{r pressure, echo = FALSE}
+
+casesCountryData <- read_csv("COVID Datasets/dailyCases.csv")
+
+casesCountryDataSelected <- casesCountryData %>%
+  select(cases, deaths, countriesAndTerritories)
+  
+
+casesCountryDataSummarized <- casesCountryDataSelected %>%
+  group_by(countriesAndTerritories) %>%
+  summarise(
+    Cases = sum(cases)
+  )
+
+glimpse(casesCountryDataSummarized)
+
+
+```
+LDA Topic Analysis Dataset:
+ss
+```{r pressure, echo=FALSE, warning = FALSE}
+
+topicAnalysisData <- read_excel("COVID Datasets/topicAnalysisData.xlsx")
+
+topicAnalysisDataSelected <- topicAnalysisData %>%
+  select(Reported_On, Title, Publication_Date, Primary_Country, Primary_Language) %>%
+  filter(Primary_Language == "English")
+
+# The reason why we're filtering the Primary language to be English is because there were entries which weren't in English, which would not make it suitable for LDA topic analysis.
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
