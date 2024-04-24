@@ -25,7 +25,7 @@ library(tidyverse)
 
 COVID Cases Dataset:
 
-```{r pressure, echo = FALSE}
+```{r pressure, echo = TRUE}
 
 casesCountryData <- read_csv("COVID Datasets/dailyCases.csv")
 
@@ -45,7 +45,7 @@ glimpse(casesCountryDataSummarized)
 ```
 LDA Topic Analysis Dataset:
 ss
-```{r pressure, echo=FALSE, warning = FALSE}
+```{r pressure, echo=TRUE, warning = FALSE}
 
 topicAnalysisData <- read_excel("COVID Datasets/topicAnalysisData.xlsx")
 
