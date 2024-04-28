@@ -51,6 +51,9 @@ names(casesCountryDataSummarized)[names(casesCountryDataSummarized) == "countrie
 #Merging the datasets into one so we have a country with its designated latitude and longitude alongside their cases
 casesCountryLatLong <- left_join(casesCountryDataSummarized, latitudelongitudeData, by = c("Countries" = "Country"))
 
+#saveRDS to be read by shiny application
+saveRDS(casesCountryLatLong, "CountryCases.rds")
+
 head(casesCountryLatLong)
 
 
