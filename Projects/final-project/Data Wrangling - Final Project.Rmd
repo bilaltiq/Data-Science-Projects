@@ -27,19 +27,31 @@ COVID Cases Dataset:
 
 ```{r pressure, echo = TRUE}
 
+#Importing dataset of covid cases
 casesCountryData <- read_csv("COVID Datasets/dailyCases.csv")
 
+#Importing dataset of latitudes and longitudes of each country, and getting rid of country codes
+latitudelongitudeData <- read_csv("COVID Datasets/latlong.csv") %>%
+  select(Country, Latitude, Longitude)
+
+
+#Selecting only the required columns from the cases dataset that we need for our leaflet map
 casesCountryDataSelected <- casesCountryData %>%
   select(cases, deaths, countriesAndTerritories)
   
-
+#Since the cases dataset is of daily cases per country in the year 2020, we are going to have to summarise the data and group by country
 casesCountryDataSummarized <- casesCountryDataSelected %>%
   group_by(countriesAndTerritories) %>%
   summarise(
     Cases = sum(cases)
   )
+#Renaming Countries and Territories to Countries for Simplicity
+names(casesCountryDataSummarized)[names(casesCountryDataSummarized) == "countriesAndTerritories"] <- "Countries"
 
-glimpse(casesCountryDataSummarized)
+#Merging the datasets into one so we have a country with its designated latitude and longitude alongside their cases
+casesCountryLatLong <- left_join(casesCountryDataSummarized, latitudelongitudeData, by = c("Countries" = "Country"))
+
+head(casesCountryLatLong)
 
 
 ```
