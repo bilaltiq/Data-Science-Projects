@@ -5,13 +5,46 @@ date: "2024-04-29"
 output: pdf_document
 ---
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(topicmodels)
+library(kableExtra)
+library(tm)
+library(janitor)
+library(tidytext)
+library(wordcloud)
+library(textdata)
+
 ```
 
 #Here we're trying to load the RDS file for text analysis that we saved during Data Wrangling
 
-```{r cars}
+```{r pressure, echo = TRUE}
+
+LDAAnalysisDataset <- readRDS("Saved RDS Files/LDATopicAnalysisData.rds") 
+
+#Tokenizing the text
+
+tokenizedLDADataset <- LDAAnalysisDataset %>%
+  unnest_tokens(output = word, input = Title) %>%
+  select(Primary_Country, word)
+
+#Getting rid of the stop words
+
+data(stop_words)
+
+tokenizedLDADataset_stopped <- tokenizedLDADataset %>%
+  anti_join(stop_words, by = "word")
+
+class(tokenizedLDADataset_stopped)
+
+#covid_lda <- LDA(tokenizedLDADataset_stopped, k = 2, control = list(seed = 1234))
+
+
+
 
 ```
 
