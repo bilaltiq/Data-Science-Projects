@@ -70,6 +70,10 @@ topicAnalysisDataSelected <- topicAnalysisData %>%
 
 # The reason why we're filtering the Primary language to be English is because there were entries which weren't in English, which would not make it suitable for LDA topic analysis.
 
+#Saving as an RDS
+
+saveRDS(topicAnalysisDataSelected, "LDATopicAnalysisData.rds")
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

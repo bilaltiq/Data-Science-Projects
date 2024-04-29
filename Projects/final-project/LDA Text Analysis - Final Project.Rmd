@@ -1,0 +1,26 @@
+---
+title: "LDA Topic Analysis"
+author: "Bilal Tariq"
+date: "2024-04-29"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Here we're trying to load the RDS file for text analysis that we saved during Data Wrangling
+
+```{r cars}
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
