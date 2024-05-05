@@ -5,7 +5,6 @@ date: "2024-04-29"
 output: pdf_document
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -20,7 +19,7 @@ library(textdata)
 library(reshape2)
 ```
 
-#Here we're trying to load the RDS file for text analysis that we saved during Data Wrangling
+Here we're trying to load the RDS file for text analysis that we saved during Data Wrangling
 
 ```{r pressure, echo = TRUE}
 
@@ -54,7 +53,7 @@ dtm <- tokenizedLDADataset_stopped %>%
 
 #Specifying the number of topics we want for our first analysis
 
-analysisLDA <- LDA(dtm, 5, method = "Gibbs", control = list(seed = 231))
+analysisLDA <- LDA(dtm, 6, method = "Gibbs", control = list(seed = 231))
 
 topics <- tidy(analysisLDA, matrix = "beta")
 head(topics)
@@ -72,17 +71,69 @@ topics %>%
 
 #covid_lda <- LDA(tokenizedLDADataset_stopped, k = 2, control = list(seed = 1234))
 
-
-
-
 ```
 
-## Including Plots
+I also decided it might be interesting to see COVID misinformation in areas where there were high cases and different geographical locations:
 
-You can also embed plots, for example:
+```{r pressure, echo= TRUE}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+indiaLDAdataset <- tokenizedLDADataset_stopped %>%
+  filter(Primary_Country == "India")
+
+dtmINDIA <- indiaLDAdataset %>%
+  count(Primary_Country, word) %>%
+  cast_dtm(Primary_Country, word, n)
+
+#Specifying the number of topics we want for our country analysis
+
+analysisLDAINDIA <- LDA(dtmINDIA, 3, method = "Gibbs", control = list(seed = 231))
+
+topicsINDIA <- tidy(analysisLDAINDIA, matrix = "beta")
+head(topics)
+
+topicsINDIA %>%
+  group_by(topic) %>%
+  top_n(5, beta) %>%
+  ungroup() %>%
+  mutate(term = reorder(term, beta)) %>%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  coord_flip()
+
+################
+
+
+USLDAdataset <- tokenizedLDADataset_stopped %>%
+  filter(Primary_Country == "US")
+
+dtmUS <- USLDAdataset %>%
+  count(Primary_Country, word) %>%
+  cast_dtm(Primary_Country, word, n)
+
+#Specifying the number of topics we want for our country analysis
+
+analysisLDAUS <- LDA(dtmUS, 3, method = "Gibbs", control = list(seed = 123))
+
+topicsUS <- tidy(analysisLDAUS, matrix = "beta")
+head(topics)
+
+topicsUS %>%
+  group_by(topic) %>%
+  top_n(5, beta) %>%
+  ungroup() %>%
+  mutate(term = reorder(term, beta)) %>%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  coord_flip()
+
+  
+
+
+
+
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
