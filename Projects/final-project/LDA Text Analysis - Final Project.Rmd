@@ -103,7 +103,6 @@ topicsINDIA %>%
 
 ################
 
-
 USLDAdataset <- tokenizedLDADataset_stopped %>%
   filter(Primary_Country == "US")
 
@@ -127,6 +126,35 @@ topicsUS %>%
   geom_col(show.legend = FALSE) +
   facet_wrap(~ topic, scales = "free") +
   coord_flip()
+
+
+################
+
+MalaysiaLDAdataset <- tokenizedLDADataset_stopped %>%
+  filter(Primary_Country == "Malaysia")
+
+dtmMALAYSIA <- MalaysiaLDAdataset %>%
+  count(Primary_Country, word) %>%
+  cast_dtm(Primary_Country, word, n)
+
+#Specifying the number of topics we want for our country analysis
+
+analysisLDAMALAYSIA <- LDA(dtmMALAYSIA, 3, method = "Gibbs", control = list(seed = 123))
+
+topicsMalaysia <- tidy(analysisLDAMALAYSIA, matrix = "beta")
+head(topics)
+
+topicsMalaysia %>%
+  group_by(topic) %>%
+  top_n(5, beta) %>%
+  ungroup() %>%
+  mutate(term = reorder(term, beta)) %>%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  coord_flip()
+
+
 
   
 
