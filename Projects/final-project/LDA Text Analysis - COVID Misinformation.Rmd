@@ -86,7 +86,7 @@ dtmINDIA <- indiaLDAdataset %>%
 
 #Specifying the number of topics we want for our country analysis
 
-analysisLDAINDIA <- LDA(dtmINDIA, 3, method = "Gibbs", control = list(seed = 231))
+analysisLDAINDIA <- LDA(dtmINDIA, 6, method = "Gibbs", control = list(seed = 231))
 
 topicsINDIA <- tidy(analysisLDAINDIA, matrix = "beta")
 head(topics)
@@ -112,14 +112,14 @@ dtmUS <- USLDAdataset %>%
 
 #Specifying the number of topics we want for our country analysis
 
-analysisLDAUS <- LDA(dtmUS, 3, method = "Gibbs", control = list(seed = 123))
+analysisLDAUS <- LDA(dtmUS, 6, method = "Gibbs", control = list(seed = 123))
 
 topicsUS <- tidy(analysisLDAUS, matrix = "beta")
 head(topics)
 
 topicsUS %>%
   group_by(topic) %>%
-  top_n(5, beta) %>%
+  top_n(3, beta) %>%
   ungroup() %>%
   mutate(term = reorder(term, beta)) %>%
   ggplot(aes(term, beta, fill = factor(topic))) +
@@ -139,7 +139,7 @@ dtmPAKISTAN <- PakistanLDAdataset %>%
 
 #Specifying the number of topics we want for our country analysis
 
-analysisLDAPakistan <- LDA(dtmPAKISTAN, 7, method = "Gibbs", control = list(seed = 123))
+analysisLDAPakistan <- LDA(dtmPAKISTAN, 6, method = "Gibbs", control = list(seed = 123))
 
 topicsPakistan <- tidy(analysisLDAPakistan, matrix = "beta")
 head(topics)
