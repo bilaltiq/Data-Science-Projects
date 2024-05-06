@@ -2,37 +2,52 @@ library(shiny)
 library(leaflet)
 library(dplyr)
 library(sf)
+library(bslib)
 
 # Reading the dataset with countries and their corresponding coordinates and cases
 COVIDCasesLatLong <- readRDS("Saved RDS Files/CountryCases.rds")
 
+# Define color palette for the markers
+colorPalette <- colorFactor(palette = c("blue", "red"), domain = COVIDCasesLatLong$Cases)
 
 ####################################
 
-ui <- fluidPage(
-  titlePanel("COVID Cases Per Country by the end of 2020"),
-  leafletOutput("map"),
-  plotOutput("linePlot")
+ui <- page_sidebar(
+  title = "COVID Cases Per Country (2020)",
+  sidebar = sidebar(
+    "Sidebar",
+    selectInput("country", "Select a country:", choices = unique(COVIDCasesLatLong$Countries))
+  ),
+  valueBoxOutput("valueBox"),
+  card(leafletOutput("map")),
 )
-
 
 server <- function(input, output, session) {
   
   output$map <- renderLeaflet({
     leaflet() %>%
       addTiles() %>%
-      setView(lng = -50, lat = 50, zoom = 2)
+      setView(lng = 0, lat = 0, zoom = 2)
   })
   
   observe({
     leafletProxy("map", data = COVIDCasesLatLong) %>%
       addProviderTiles("CartoDB.Voyager") %>%
       clearMarkers() %>%
-      addCircleMarkers(~Longitude, ~Latitude, radius = 10, color = "red", fillOpacity = 0.5, 
+      addCircleMarkers(~Longitude, ~Latitude, radius = ~sqrt(Cases)/70, color = ~colorPalette(Cases), fillOpacity = 0.5, 
                        popup = ~paste("Country: ", Countries, "<br>Cases: ", Cases))
   })
   
-}
+  output$valueBox <- renderValueBox({
+    selected_country <- input$country
+    selected_cases <- COVIDCasesLatLong$Cases[COVIDCasesLatLong$Countries == selected_country]
+    value_box(
+      title = "Number of Cases",
+      value = selected_cases,
+      showcase = bsicons::bs_icon("bar-chart"),
+    )
+  })
 
+}
 
 shinyApp(ui, server)

@@ -133,13 +133,13 @@ topicsUS %>%
 PakistanLDAdataset <- tokenizedLDADataset_stopped %>%
   filter(Primary_Country == "Pakistan")
 
-dtmPAKISTAN <- MalaysiaLDAdataset %>%
+dtmPAKISTAN <- PakistanLDAdataset %>%
   count(Primary_Country, word) %>%
   cast_dtm(Primary_Country, word, n)
 
 #Specifying the number of topics we want for our country analysis
 
-analysisLDAPakistan <- LDA(dtmPAKISTAN, 3, method = "Gibbs", control = list(seed = 123))
+analysisLDAPakistan <- LDA(dtmPAKISTAN, 7, method = "Gibbs", control = list(seed = 123))
 
 topicsPakistan <- tidy(analysisLDAPakistan, matrix = "beta")
 head(topics)
