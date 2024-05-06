@@ -53,14 +53,15 @@ dtm <- tokenizedLDADataset_stopped %>%
 
 #Specifying the number of topics we want for our first analysis
 
-analysisLDA <- LDA(dtm, 6, method = "Gibbs", control = list(seed = 231))
+analysisLDA <- LDA(dtm, 6, method = "Gibbs", control = list(seed = 123))
 
 topics <- tidy(analysisLDA, matrix = "beta")
-head(topics)
+
+#head(topics)
 
 topics %>%
   group_by(topic) %>%
-  top_n(10, beta) %>%
+  top_n(5, beta) %>%
   ungroup() %>%
   mutate(term = reorder(term, beta)) %>%
   ggplot(aes(term, beta, fill = factor(topic))) +
@@ -69,7 +70,6 @@ topics %>%
   coord_flip()
 
 
-#covid_lda <- LDA(tokenizedLDADataset_stopped, k = 2, control = list(seed = 1234))
 
 ```
 
@@ -146,7 +146,7 @@ head(topics)
 
 topicsPakistan %>%
   group_by(topic) %>%
-  top_n(5, beta) %>%
+  top_n(2, beta) %>%
   ungroup() %>%
   mutate(term = reorder(term, beta)) %>%
   ggplot(aes(term, beta, fill = factor(topic))) +
@@ -155,8 +155,3 @@ topicsPakistan %>%
   coord_flip()
 ```
 
-```{r pressure, echo = TRUE}
-
-
-
-```
