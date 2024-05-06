@@ -130,21 +130,21 @@ topicsUS %>%
 
 ################
 
-MalaysiaLDAdataset <- tokenizedLDADataset_stopped %>%
-  filter(Primary_Country == "Malaysia")
+PakistanLDAdataset <- tokenizedLDADataset_stopped %>%
+  filter(Primary_Country == "Pakistan")
 
-dtmMALAYSIA <- MalaysiaLDAdataset %>%
+dtmPAKISTAN <- MalaysiaLDAdataset %>%
   count(Primary_Country, word) %>%
   cast_dtm(Primary_Country, word, n)
 
 #Specifying the number of topics we want for our country analysis
 
-analysisLDAMALAYSIA <- LDA(dtmMALAYSIA, 3, method = "Gibbs", control = list(seed = 123))
+analysisLDAPakistan <- LDA(dtmPAKISTAN, 3, method = "Gibbs", control = list(seed = 123))
 
-topicsMalaysia <- tidy(analysisLDAMALAYSIA, matrix = "beta")
+topicsPakistan <- tidy(analysisLDAPakistan, matrix = "beta")
 head(topics)
 
-topicsMalaysia %>%
+topicsPakistan %>%
   group_by(topic) %>%
   top_n(5, beta) %>%
   ungroup() %>%
@@ -156,12 +156,10 @@ topicsMalaysia %>%
 
 
 
-  
+```
 
-
+```{r pressure, echo = TRUE}
 
 
 
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

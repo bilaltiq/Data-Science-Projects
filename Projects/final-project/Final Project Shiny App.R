@@ -4,18 +4,19 @@ library(dplyr)
 library(sf)
 
 # Reading the dataset with countries and their corresponding coordinates and cases
-COVIDCasesLatLong<- readRDS("Saved RDS Files/CountryCases.rds")
+COVIDCasesLatLong <- readRDS("Saved RDS Files/CountryCases.rds")
+
 
 ####################################
 
 ui <- fluidPage(
-  titlePanel("COVID Cases in each Country"),
-  leafletOutput("map")
+  titlePanel("COVID Cases Per Country by the end of 2020"),
+  leafletOutput("map"),
+  plotOutput("linePlot")
 )
 
 
 server <- function(input, output, session) {
-  
   
   output$map <- renderLeaflet({
     leaflet() %>%
@@ -27,16 +28,10 @@ server <- function(input, output, session) {
     leafletProxy("map", data = COVIDCasesLatLong) %>%
       addProviderTiles("CartoDB.Voyager") %>%
       clearMarkers() %>%
-      addMarkers(~Longitude, ~Latitude, popup = ~paste("Country: ", Countries, "<br>Cases: ", Cases), 
-                  icon = leaflet::makeIcon(
-                  iconUrl = "Assets/icon.png",
-                  iconWidth = 38, iconHeight = 38
-                  ))
+      addCircleMarkers(~Longitude, ~Latitude, radius = 10, color = "red", fillOpacity = 0.5, 
+                       popup = ~paste("Country: ", Countries, "<br>Cases: ", Cases))
   })
   
-  output$coords <- renderText({
-    paste("Latitude:", input$map_click$lat, "\nLongitude", input$map_click$lng)
-  })
 }
 
 

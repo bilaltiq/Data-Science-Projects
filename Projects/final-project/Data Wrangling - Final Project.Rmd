@@ -25,7 +25,7 @@ library(tidyverse)
 
 COVID Cases Dataset:
 
-```{r pressure, echo = TRUE}
+```{r pressure, echo = TRUE, warning = FALSE}
 
 #Importing dataset of covid cases
 casesCountryData <- read_csv("COVID Datasets/dailyCases.csv")
@@ -45,11 +45,22 @@ casesCountryDataSummarized <- casesCountryDataSelected %>%
   summarise(
     Cases = sum(cases)
   )
+
 #Renaming Countries and Territories to Countries for Simplicity
 names(casesCountryDataSummarized)[names(casesCountryDataSummarized) == "countriesAndTerritories"] <- "Countries"
 
+#We also have to clean up the dataset because some countries have '_' in their names
+#Since the code may be a bit too complicated for R, we will be exporting as a CSV
+#and manually adjusting the names of those countries
+
+write.csv(casesCountryDataSummarized, "CountryDataSummarizedNames.csv",row.names=FALSE)
+
+#Now read the corrected names dataset
+
+CorrectedNames <- read_csv("COVID Datasets/CountryDataSummarizedCorrectedNames.csv")
+
 #Merging the datasets into one so we have a country with its designated latitude and longitude alongside their cases
-casesCountryLatLong <- left_join(casesCountryDataSummarized, latitudelongitudeData, by = c("Countries" = "Country"))
+casesCountryLatLong <- left_join(CorrectedNames, latitudelongitudeData, by = c("Countries" = "Country"))
 
 #saveRDS to be read by shiny application
 saveRDS(casesCountryLatLong, "CountryCases.rds")
@@ -58,8 +69,9 @@ head(casesCountryLatLong)
 
 
 ```
+
+
 LDA Topic Analysis Dataset:
-ss
 ```{r pressure, echo=TRUE, warning = FALSE}
 
 topicAnalysisData <- read_excel("COVID Datasets/topicAnalysisData.xlsx")
@@ -76,4 +88,3 @@ saveRDS(topicAnalysisDataSelected, "LDATopicAnalysisData.rds")
 
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
