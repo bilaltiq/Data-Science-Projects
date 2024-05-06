@@ -3,6 +3,7 @@ library(leaflet)
 library(dplyr)
 library(sf)
 library(bslib)
+library(shinydashboard)
 
 # Reading the dataset with countries and their corresponding coordinates and cases
 COVIDCasesLatLong <- readRDS("Saved RDS Files/CountryCases.rds")

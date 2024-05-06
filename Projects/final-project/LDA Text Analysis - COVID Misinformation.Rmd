@@ -153,9 +153,6 @@ topicsPakistan %>%
   geom_col(show.legend = FALSE) +
   facet_wrap(~ topic, scales = "free") +
   coord_flip()
-
-
-
 ```
 
 ```{r pressure, echo = TRUE}
