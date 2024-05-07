@@ -223,7 +223,7 @@ dtmPAKISTAN <- PakistanLDAdataset %>%
 
 #Specifying the number of topics we want for our country analysis
 
-analysisLDAPakistan <- LDA(dtmPAKISTAN, 6, method = "Gibbs", control = list(seed = 123))
+analysisLDAPakistan <- LDA(dtmPAKISTAN, 4, method = "Gibbs", control = list(seed = 123))
 
 topicsPakistan <- tidy(analysisLDAPakistan, matrix = "beta")
 
@@ -302,3 +302,73 @@ topicsINDIA %>%
 This summarizes the methods I had taken to perform my LDA Topic Analyses. To reiterate, each model for the countries that were investigated made sure that their topics were experimented with so that they are cohesive. Furthermore, as we will discuss in our results and findings, there are some topics that don't fit well with each other.
 
 # Results and Findings
+
+So what does all of this mean? After looking at a visualization of the spread of COVID throughout the world and the misinformation that has been spread, how do we interpret these results? To reiterate, we were looking for misinformation to have an association with the cultures, geographies, number of COVID cases and development of the country. So let's interpret these results by first looking at the LDA Topic Analysis of the world.
+
+```{r echo = FALSE, eval = TRUE}
+
+analysisLDA <- LDA(dtm, 4, method = "Gibbs", control = list(seed = 123))
+
+topics <- tidy(analysisLDA, matrix = "beta")
+
+topics %>%
+  group_by(topic) %>%
+  top_n(5, beta) %>%
+  ungroup() %>%
+  mutate(term = reorder(term, beta)) %>%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  coord_flip()
+```
+
+What I noticed when performing and LDA Analysis on the global misinformation was that there weren't many definitive "topics". This may be because there was just an overall use of words like "viral" and "false" etc. However, despite there not being an exact topic distinction, I settled on these 4 topics because they are the most distinct. The topics are described as follows:
+
+-   Topic 1 describes an overall topic of Social Media; videos going viral, fake news online.
+
+-   Topic 2 is similar to topic 1 with an overarching idea of false information.
+
+-   Topic 3 describes testing and vaccinations, and people's reaction to them.
+
+-   Topic 4 describes where the outbreak of the virus started and its health effects.
+
+Topic Analysis of the world was only so revealing, so let's delve into individual country topic analysis.
+
+**Pakistan Misinformation LDA Analysis**
+
+```{r echo = FALSE}
+
+analysisLDAPakistan <- LDA(dtmPAKISTAN, 6, method = "Gibbs", control = list(seed = 123))
+
+topicsPakistan <- tidy(analysisLDAPakistan, matrix = "beta")
+
+topicsPakistan %>%
+  group_by(topic) %>%
+  top_n(2, beta) %>%
+  ungroup() %>%
+  mutate(term = reorder(term, beta)) %>%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  coord_flip()
+
+```
+
+Being an international student in the US from Pakistan, this particularly stood out to me. Many of the topics here have a similar overarching idea as the world topic analysis we evaluated initially, but there are some distinct topics that show the misinformation in the nation.
+
+-   Topic 2 and 4 show a topic of COVID from a "Pakistani" perspective; misinformation relevant to people being discharged earlier than they should have etc.
+
+-   Topic 3 shows how misinformation spread in Pakistan. This was prominently done via Whatsapp and rumours, which are a big part of Pakistani Culture.
+
+-   Topic 5 shows Natural Ailments. It's interesting to see how in a developing country where the culture revolves around naturally healing, there was misinformation pertaining to healing methods which was curated towards Pakistan.
+
+-   Topic 1 refers to Naran, which is a local tourist destination. In 2020, there was a lot of misinformation around the COVID spread there and people still went to that area.
+
+Overall, we can see that many of the misinformation topics revolved around culturally specific factors: the use of Whatsapp, natural ailments and local tourist destinations. There seems to be a high association with the topics of misinformation with the culturally and geographically specific factors that were mentioned before.
+
+**United States Misinformation LDA Analysis**
+
+```{r echo = FALSE}
+
+
+```
