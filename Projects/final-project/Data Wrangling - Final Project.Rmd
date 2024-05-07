@@ -34,7 +34,6 @@ casesCountryData <- read_csv("COVID Datasets/dailyCases.csv")
 latitudelongitudeData <- read_csv("COVID Datasets/latlong.csv") %>%
   select(Country, Latitude, Longitude)
 
-
 #Selecting only the required columns from the cases dataset that we need for our leaflet map
 casesCountryDataSelected <- casesCountryData %>%
   select(cases, deaths, countriesAndTerritories)
@@ -76,11 +75,11 @@ LDA Topic Analysis Dataset:
 
 topicAnalysisData <- read_excel("COVID Datasets/topicAnalysisData.xlsx")
 
+# The reason why we're filtering the Primary language to be English is because there were entries which weren't in English, which would not make it suitable for LDA topic analysis.
+
 topicAnalysisDataSelected <- topicAnalysisData %>%
   select(Reported_On, Title, Publication_Date, Primary_Country, Primary_Language) %>%
   filter(Primary_Language == "English")
-
-# The reason why we're filtering the Primary language to be English is because there were entries which weren't in English, which would not make it suitable for LDA topic analysis.
 
 #Saving as an RDS
 

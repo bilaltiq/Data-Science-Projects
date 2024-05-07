@@ -36,6 +36,11 @@ library(kableExtra)
 library(janitor)
 library(dplyr)
 library(stringr)
+library(topicmodels)
+library(tm)
+library(tidytext)
+library(textdata)
+library(reshape2)
 # do you need more packages?
 ```
 
