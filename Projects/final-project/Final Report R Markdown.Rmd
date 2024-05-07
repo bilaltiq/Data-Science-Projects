@@ -282,7 +282,7 @@ dtmINDIA <- indiaLDAdataset %>%
 
 #Specifying the number of topics we want for our country analysis
 
-analysisLDAINDIA <- LDA(dtmINDIA, 6, method = "Gibbs", control = list(seed = 231))
+analysisLDAINDIA <- LDA(dtmINDIA, 4, method = "Gibbs", control = list(seed = 231))
 
 topicsINDIA <- tidy(analysisLDAINDIA, matrix = "beta")
 
@@ -298,3 +298,7 @@ topicsINDIA %>%
 
 
 ```
+
+This summarizes the methods I had taken to perform my LDA Topic Analyses. To reiterate, each model for the countries that were investigated made sure that their topics were experimented with so that they are cohesive. Furthermore, as we will discuss in our results and findings, there are some topics that don't fit well with each other.
+
+# Results and Findings
