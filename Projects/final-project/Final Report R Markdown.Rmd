@@ -71,6 +71,7 @@ casesCountryDataSummarized <- casesCountryDataSelected %>%
     Cases = sum(cases)
   )
 
+#Only displayed the first few rows
 top_5 <- head(casesCountryDataSummarized, n = 5)
 
 kable(top_5)
@@ -173,10 +174,13 @@ Finally, we can run the LDA text analysis using the topicmodels package as shown
 
 ```{r echo = TRUE, eval = TRUE}
 
+#The LDA function is the heart of our analysis
 
 analysisLDA <- LDA(dtm, 3, method = "Gibbs", control = list(seed = 123))
 
 topics <- tidy(analysisLDA, matrix = "beta")
+
+#Using GGPlot to visualise the data through means of a column bar chart
 
 topics %>%
   group_by(topic) %>%
@@ -370,5 +374,87 @@ Overall, we can see that many of the misinformation topics revolved around cultu
 
 ```{r echo = FALSE}
 
+USLDAdataset <- tokenizedLDADataset_stopped %>%
+  filter(Primary_Country == "US")
+
+dtmUS <- USLDAdataset %>%
+  count(Primary_Country, word) %>%
+  cast_dtm(Primary_Country, word, n)
+
+#Specifying the number of topics we want for our country analysis
+
+analysisLDAUS <- LDA(dtmUS, 3, method = "Gibbs", control = list(seed = 123))
+
+topicsUS <- tidy(analysisLDAUS, matrix = "beta")
+
+topicsUS %>%
+  group_by(topic) %>%
+  top_n(5, beta) %>%
+  ungroup() %>%
+  mutate(term = reorder(term, beta)) %>%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  coord_flip()
+
 
 ```
+
+When I looked at the topic analysis for the United States, it appeared to be very similar to that of the topic analysis of the world, so it was pretty inconclusive if it showed any indication of geography / culture affecting the analysis. One notable exception was topic 3, which seemed to be a more Political topic which catered to the U.S, especially considering how Donald Trump was president at the time and his handling of the COVID crisis in the United States. However, what's important to note is that United States culture and sentiments are generally resonated by other countries, which is why the United States doesn't necessarily have a distinct set of misinformation topics, while other countries like Pakistan and India (discussed below) do.
+
+**India Misinformation LDA Analysis**
+
+```{r echo = FALSE}
+
+indiaLDAdataset <- tokenizedLDADataset_stopped %>%
+  filter(Primary_Country == "India")
+
+dtmINDIA <- indiaLDAdataset %>%
+  count(Primary_Country, word) %>%
+  cast_dtm(Primary_Country, word, n)
+
+#Specifying the number of topics we want for our country analysis
+
+analysisLDAINDIA <- LDA(dtmINDIA, 4, method = "Gibbs", control = list(seed = 231))
+
+topicsINDIA <- tidy(analysisLDAINDIA, matrix = "beta")
+
+topicsINDIA %>%
+  group_by(topic) %>%
+  top_n(3, beta) %>%
+  ungroup() %>%
+  mutate(term = reorder(term, beta)) %>%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  coord_flip()
+
+```
+
+Analyzing the results for the topics in India also gave a few key insights:
+
+-   Topics 1 and 2 revealed more about the crisis in India. The first resonates around Mumbai, where there was a crisis with distributing vaccines and the health of the elderly. Furthermore, Topic 2 talked more about the migrant worker crisis, where many Indian migrant workers had to deal with a decrease in wages due to lockdown.
+
+-   We can also see a general trend where the topic analyses we found across the world were also found in these countries. Topic 3 and 4 represent the topic of viral fake news and the way misinformation was spread through videos, messages, etc.
+
+# Conclusion and Reflection
+
+Our initial goal was to address whether misinformation topics across the globe and across countries were affected by cultural, geographic, socioeconomic and political factors and how the misinformation was associated with the spread of the coronavirus. Through our LDA topic analysis, we found that there was indeed an association of local events with misinformation that had been spread across countries, despite there also being repeated topics of misinformation that had been mutually shared between various countries. Our study did reveal a general understanding of misinformation throughout the globe, however the topics did overlap and were ambiguous. Our map visualization also helped illuminate the intensity of the spread of the virus, and it showed that there was an association of topics with 'outbreak' and high density cities like 'Mumbai' in areas where there was a higher risk of catching the virus.
+
+**Limitations**
+
+The LDA topic analysis proved to be useful in some circumstances but unreliable in others. Since the LDA analysis functions by grouping words together, it is very much possible that there were limitations in understanding the context of some words. If we were to perform an analysis on misinformation in the future, it would be better to use a text analysis that incorporated sentence context, which would then have made the types of misinformation much clearer. Furthermore, we were limited in the sense that our data only comprised of titles for each article. This made it harder to ascertain the frequencies of misinformation. To improve, we could have scraped the individual documents from the dataset with their provided URL's and performed an LDA text analysis on those documents. Finally, the biggest limitation in our study was that the dataset was picked by individuals, and inherently can't be an objective metric. Since some forms of misinformation may not necessarily be as clear, it's difficult to determine what does and does not classify as misinformation, and this may have skewed our results in our topic analysis.
+
+------------------------------------------------------------------------
+
+# References
+
+(Click on the text to be taken to the respective website)
+
+1.  [Craig Polosky, KFF, 2021](https://www.kff.org/coronavirus-covid-19/press-release/covid-19-misinformation-is-ubiquitous-78-of-the-public-believes-or-is-unsure-about-at-least-one-false-statement-and-nearly-at-third-believe-at-least-four-of-eight-false-statements-tested/)
+
+2.  [European Center for Disease Prevention and Control, 2020 (Dataset for Daily Cases)](https://www.ecdc.europa.eu/en/covid-19/data)
+
+3.  [UNESCO, 2020 (Dataset for COVID misinformation)](https://www.unesco.org/en/world-media-trends/esoc-covid-19-misinformation-dataset)
+
+4.  [Grün and Hornik, 2011 (Topicmodels R Package)](https://cran.r-project.org/web/packages/topicmodels/vignettes/topicmodels.pdf)

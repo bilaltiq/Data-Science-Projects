@@ -155,8 +155,6 @@ Briefly describe and justify your plans for analysis (i.e., visualizations and s
 ```
 ```{r}
 
-
-
 # I have divided my wrangling code into various wrangling sections. The first
 # one below is general wrangling code that allows me to select the columns I 
 # need for my first visualisation and the second one
